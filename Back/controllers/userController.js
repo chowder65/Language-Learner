@@ -15,7 +15,7 @@ let userController = {
     getUsers: async (req, res, next) => {
         await client.connect();
 
-        let db = client.db('lingoLounge');
+        let db = client.db('LingoLounge');
         let collection = db.collection('User');
 
         const query = req.body.userName;
@@ -25,7 +25,7 @@ let userController = {
     addUser: async(req, res, next) => {
         await client.connect();
 
-        let db = client.db('lingoLounge');
+        let db = client.db('LingoLounge');
         let collection = db.collection('User');
 
         const query = {
