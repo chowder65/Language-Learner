@@ -12,7 +12,7 @@ const client = new MongoClient(uri, {
 
 
 let userController = {
-    getUsers: async (req, res, next) => {
+    getUser: async (req, res, next) => {
         await client.connect();
 
         let db = client.db('LingoLounge');
