@@ -62,7 +62,7 @@ function loginUser(){
         let URL = "http://localhost:3000/getUsers"
 
         fetch(URL, {
-            method: 'POST',
+            method: 'GET',
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json'
