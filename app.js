@@ -7,6 +7,7 @@ var cons = require('consolidate');
 
 var indexRouter = require('./Back/routes/index');
 var usersRouter = require('./Back/routes/users');
+var loginRouter = require('./Back/routes/login')
 
 var app = express();
 
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/login', loginRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
