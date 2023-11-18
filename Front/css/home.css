@@ -7,15 +7,38 @@ body, html {
   background: #7895CB;
   height: 100%;
 }
-
+p,li{
+  color:white;
+  
+}
+h2{
+  color:#3b4589
+}
 .homepage-container {
   text-align: center;
-  padding-top: 20%;
+
+}
+.navbar{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #4d88ff;
+}
+main{
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+li {
+
+  list-style-type: none;
 }
 
 .homepage-container header h1 {
   color: #fff;
   font-size: 3rem;
+  margin: 0 auto;
 }
 
 .homepage-container header p {
@@ -34,7 +57,7 @@ body, html {
 }
 
 .homepage-container nav .login-button:hover {
-  background: #3b4589;
+  background: #2a4ca0;
 }
 
 #title {
@@ -53,3 +76,15 @@ body, html {
       transform: translateY(0);
     }
   }
+  .homepage-container nav .login-button {
+    text-decoration: none;
+    background-color: #4d88ff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
