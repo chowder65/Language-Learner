@@ -38,11 +38,31 @@ let userController = {
         
     },
     updateUser: async (req, res, next) => {
-        res.send(req.body.userName + " " + req.body.userEmail + " " + req.body.userPassword);
+        await client.connect();
+
+        let db = client.db('LingoLounge');
+        let collection = db.collection('User');
+
+        const query = {
+            userName: req.body.userName,
+            userEmail: req.body.userEmail,
+            userPassword: req.body.userPassword,
+            userLanguagesLearning: req.body.userLanguagesLearning,
+            userCompletedLanguages: req.body.userCompletedLanguages,
+            userLessonsCompleted: req.body.userLessonsCompleted
+        };
+        const user = await collection.updateOne(query);
+        res.send(query + "done")
     },
     deleteUser: async(req, res, next) => {
-        res.send(req.body.userName + " " + req.body.userEmail + " " + req.body.userPassword);
-    }
+        await client.connect();
+
+        let db = client.db('LingoLounge');
+        let collection = db.collection('User');
+
+        const query = req.body.userName;
+        const user = await collection.deleteOne({ userName: query });
+        res.send(user);    }
 }
 
 
