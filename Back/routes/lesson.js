@@ -7,9 +7,9 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/getLesson', lessonController);
-router.post('/addLesson', lessonController );
-router.patch('/updateLesson', lessonController );
-router.delete('/deleteLesson', lessonController);
+router.get('/getLesson', lessonController.getLesson);
+router.post('/addLesson', lessonController.addLesson);
+router.patch('/updateLesson', lessonController.updateLesson);
+router.delete('/deleteLesson', lessonController.deleteLesson);
 
 module.exports = router;
