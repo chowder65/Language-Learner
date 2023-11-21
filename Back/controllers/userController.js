@@ -47,9 +47,9 @@ let userController = {
             userName: req.body.userName,
             userEmail: req.body.userEmail,
             userPassword: req.body.userPassword,
-            userLanguagesLearning: req.body.userLanguagesLearning,
             userCompletedLanguages: req.body.userCompletedLanguages,
-            userLessonsCompleted: req.body.userLessonsCompleted
+            userLessonsCompleted: req.body.userLessonsCompleted,
+            userLessonProgress: req.body.userLessonProgress
         };
         const user = await collection.updateOne(query);
         res.send(query + "done")
