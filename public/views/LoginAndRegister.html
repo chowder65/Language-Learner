@@ -8,6 +8,7 @@
   <title>Login & Regestraion Form</title>
   <!---Custom CSS File--->
   <link rel="stylesheet" href="../css/LoginAndCreate.css">
+  <script src="../javascripts/LoginAndCreate.js" defer></script>
 </head>
 <body>
   <div class="container">
@@ -18,7 +19,7 @@
         <input type="text" placeholder="Enter your email" id="LoginEmail">
         <input type="password" placeholder="Enter your password" id="LoginPassword">
         <a href="#">Forgot password?</a>
-        <input type="button" class="button" value="Login" onclick="loginUser()">
+        <input type="button" class="button" value="Login" id="LoginUserButton">
       </form>
       <div class="signup">
         <span class="signup">Don't have an account?
@@ -32,7 +33,7 @@
         <input type="text" placeholder="Enter your email" id="CreateEmail">
         <input type="password" placeholder="Create a password" id="CreatePassword">
         <input type="password" placeholder="Confirm your password" id="CreatePasswordTwo">
-        <input type="button" class="button" value="Signup" onclick="createUser()">
+        <input type="button" class="button" value="Signup" id="CreateUserButton">
       </form>
       <div class="signup">
         <span class="signup">Already have an account?
