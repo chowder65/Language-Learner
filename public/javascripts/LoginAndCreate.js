@@ -26,7 +26,7 @@ function createUser(){
         }
     
         //fetch the api and create the user
-        let URL = "http://localhost:3000/addUser"
+        let URL = "http://localhost:3000/users/addUser"
     
         fetch(URL, {
             method: 'POST',
@@ -74,7 +74,7 @@ function loginUser(){
         }
 
         //fetch the api and get the user
-        let URL = "http://localhost:3000/getUser"
+        let URL = "http://localhost:3000/users/getUser"
 
         fetch(URL, {
             method: 'GET',
