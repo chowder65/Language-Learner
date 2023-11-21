@@ -1,3 +1,16 @@
+document.getElementById('CreateUserButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    console.log("create user button clicked!")
+    createUser();
+})
+
+document.getElementById('LoginUserButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    console.log("Login user button clicked!")
+})
+
+
+
 function createUser(){
     console.log("create button clicked!")
 
@@ -25,6 +38,8 @@ function createUser(){
             .then(res => {
                 if(res.status == 200){
                     console.log("User Created!")
+                }else{
+                    console.log("Something wrong with User Creation Fetch")
                 }
             })
             .catch(error => console.error('Error:', error))
@@ -36,12 +51,12 @@ function createUser(){
 };
 
 function checkEmial(email){
-    const Regex = "";
+    const Regex = new RegExp("");
     return Regex.test(email)
 }
 
 function checkPassowrd(passowrd,){
-    const Regex = ""
+    const Regex =  new RegExp("")
     return Regex.test(passowrd)
 }
 
@@ -59,7 +74,7 @@ function loginUser(){
         }
 
         //fetch the api and get the user
-        let URL = "http://localhost:3000/getUsers"
+        let URL = "http://localhost:3000/getUser"
 
         fetch(URL, {
             method: 'GET',
@@ -71,6 +86,8 @@ function loginUser(){
             if (res.status == 200) {
                 //go to index
                 window.location.href = '/'
+            }else{
+                console.log("something wrong with the User login Fetch")
             }
         }).catch(error => console.error('Fetch Error:', error, 'Status Code:', error.status))
     

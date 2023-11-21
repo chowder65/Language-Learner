@@ -29,7 +29,6 @@ let userController = {
         let collection = db.collection('User');
 
         const query = {
-            userName: req.body.userName,
             userEmail: req.body.userEmail,
             userPassword: req.body.userPassword
         };
