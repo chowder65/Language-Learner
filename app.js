@@ -12,7 +12,7 @@ var loginRouter = require('./Back/routes/login')
 var app = express();
 
 app.engine('html', cons.swig);
-app.set('views', path.join(__dirname, './Front/views'));
+app.set('views', path.join(__dirname, './public/views'));
 app.set('view engine', 'html');
 
 app.use(logger('dev'));
