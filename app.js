@@ -9,7 +9,8 @@ var indexRouter = require('./Back/routes/index');
 var usersRouter = require('./Back/routes/users');
 var loginRouter = require('./Back/routes/login');
 var lessonRouter = require('./Back/routes/lesson');
-var quizRouter = require('./Back/routes/quiz')
+var quizRouter = require('./Back/routes/quiz');
+var questionRouter = require('./Back/routes/questions');
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/lesson', lessonRouter);
 app.use('/quiz', quizRouter);
+app.use('/questions', questionRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
