@@ -30,7 +30,16 @@ let lessonController = {
         const query = {
             lessonId: req.body.quizId,
             lessonTopic: req.body.quizTopic,
-            questionIds: req.body.questionIds,
+            L1questionIds: req.body.L1questionIds,
+            L2questionIds: req.body.L2questionIds,
+            L3questionIds: req.body.L3questionIds,
+            L4questionIds: req.body.L4questionIds,
+            L5questionIds: req.body.L5questionIds,
+            L6questionIds: req.body.L6questionIds,
+            L7questionIds: req.body.L7questionIds,
+            L8questionIds: req.body.L8questionIds,
+            L9questionIds: req.body.L9questionIds,
+            L10questionIds: req.body.L10questionIds,
         };
 
         const lesson = await collection.insertOne(query);
@@ -46,7 +55,16 @@ let lessonController = {
         const query = {
             lessonId: req.body.quizId,
             lessonTopic: req.body.quizTopic,
-            questionIds: req.body.questionIds,
+            L1questionIds: req.body.L1questionIds,
+            L2questionIds: req.body.L2questionIds,
+            L3questionIds: req.body.L3questionIds,
+            L4questionIds: req.body.L4questionIds,
+            L5questionIds: req.body.L5questionIds,
+            L6questionIds: req.body.L6questionIds,
+            L7questionIds: req.body.L7questionIds,
+            L8questionIds: req.body.L8questionIds,
+            L9questionIds: req.body.L9questionIds,
+            L10questionIds: req.body.L10questionIds,
         };
 
         const lesson = await collection.updateOne(query);
