@@ -6,6 +6,7 @@ document.getElementById('CreateUserButton').addEventListener('click', function(e
 
 document.getElementById('LoginUserButton').addEventListener('click', function(event) {
     event.preventDefault();
+    loginUser();
     console.log("Login user button clicked!")
 })
 
