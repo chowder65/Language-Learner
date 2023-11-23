@@ -18,8 +18,8 @@ let userController = {
         let db = client.db('LingoLounge');
         let collection = db.collection('User');
 
-        const query = req.body.userName;
-        const user = await collection.findOne({ userName: query });
+        const query = req.body.userEmail;
+        const user = await collection.findOne({ userEmail: query });
         res.send(user);
     },
     addUser: async(req, res, next) => {
@@ -29,12 +29,14 @@ let userController = {
         let collection = db.collection('User');
 
         const query = {
-            userName: req.body.userName,
             userEmail: req.body.userEmail,
-            userPassword: req.body.userPassword
+            userPassword: req.body.userPassword,
+            userCompletedLanguages: req.body.userCompletedLanguages,
+            userLessonsCompleted: req.body.userLessonsCompleted,
+            userLessonProgress: req.body.userLessonProgress
         };
         const user = await collection.insertOne(query);
-        res.send(query + "done")
+        res.send(query + "Created")
         
     },
     updateUser: async (req, res, next) => {
@@ -44,7 +46,6 @@ let userController = {
         let collection = db.collection('User');
 
         const query = {
-            userName: req.body.userName,
             userEmail: req.body.userEmail,
             userPassword: req.body.userPassword,
             userCompletedLanguages: req.body.userCompletedLanguages,
@@ -52,7 +53,7 @@ let userController = {
             userLessonProgress: req.body.userLessonProgress
         };
         const user = await collection.updateOne(query);
-        res.send(query + "done")
+        res.send(query + "Updated")
     },
     deleteUser: async(req, res, next) => {
         await client.connect();
@@ -62,7 +63,8 @@ let userController = {
 
         const query = req.body.userName;
         const user = await collection.deleteOne({ userName: query });
-        res.send(user);    }
+        res.send(user);    
+    }
 }
 
 
