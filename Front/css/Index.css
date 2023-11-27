@@ -112,7 +112,73 @@
   color: #333;
 }
 .menu_container::-webkit-scrollbar {
-    display: none;
+  display: none;
+}
+
+/* Modal Styles */
+.modal-dialog {
+  max-width: 500px; /* Adjust the width as needed */
+}
+
+.modal-content {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  background-color: #4A55A2;
+  color: white;
+  padding: 10px 20px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+.modal-body {
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+}
+
+.modal-footer {
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+}
+
+/* Button styles for modal */
+#modalCloseUserNameBtn, #modalSaveUserNameChanges,
+#modalClosePasswordBtn, #modalSavePasswordChanges,
+#modalCloseLogoutBtn, #modalLogout {
+  border-radius: 5px;
+  font-family: "Poppins", sans-serif;
+}
+
+#modalSaveUserNameChanges, #modalSavePasswordChanges, #modalLogout {
+  background-color: #4A55A2;
+  color: white;
+  border: none;
+}
+
+.btn-secondary {
+  background-color: #707070;
+  color: white;
+  border: none;
+}
+
+/* Styling for modal trigger buttons */
+.sidebar .link.flex.btn.btn-link {
+  background-color: transparent;
+  color: #707070;
+  transition: color 0.3s ease;
+}
+
+.sidebar .link.flex.btn.btn-link:hover {
+  color: #fff;
+  background-color: transparent;
+}
+
+.sidebar .link.flex.btn.btn-link i {
+  margin-right: 10px;
 }
 
 /* Responsive */
