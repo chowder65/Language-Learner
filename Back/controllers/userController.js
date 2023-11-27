@@ -1,4 +1,5 @@
 const {MongoClient, ServerApiVersion } = require('mongodb');
+const dataEncryptionController = require('./dataEncryptionController');
 
 
 const uri = 'mongodb+srv://mguest:LingoLounge123@lingolounge.ahioda5.mongodb.net/?retryWrites=true&w=majority';
@@ -20,6 +21,12 @@ let userController = {
 
         const query = req.body.userEmail;
         const user = await collection.findOne({ userEmail: query });
+        if(dataEncryptionController.decrypt(user.userPassword) == req.body.userPassword){
+            res.send(true);
+        }else{
+            res.send(false);
+        }
+
         res.send(user);
     },
     addUser: async(req, res, next) => {
@@ -30,7 +37,7 @@ let userController = {
 
         const query = {
             userEmail: req.body.userEmail,
-            userPassword: req.body.userPassword,
+            userPassword: dataEncryptionController.encrypt(req.body.userPassword),
             userCompletedLanguages: req.body.userCompletedLanguages,
             userLessonsCompleted: req.body.userLessonsCompleted,
             userLessonProgress: req.body.userLessonProgress
@@ -61,8 +68,8 @@ let userController = {
         let db = client.db('LingoLounge');
         let collection = db.collection('User');
 
-        const query = req.body.userName;
-        const user = await collection.deleteOne({ userName: query });
+        const query = req.body.userEmail;
+        const user = await collection.deleteOne({ userEmail: query });
         res.send(user);    
     }
 }
