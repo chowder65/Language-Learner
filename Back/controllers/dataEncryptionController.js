@@ -1,13 +1,16 @@
 const crypto = require('crypto');
 
 const dataEncryptionController = {
-    encrypt: (req, res) => {
+    encrypt: (req) => {
+        console.log(req)
 
         const iv = crypto.randomBytes(16);
-        const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key), iv);
+        const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(crypto.scryptSync(req, 'salt', 32)), iv);
 
-        let encryptedData = cipher.update(data, 'utf-8', 'hex');
+        let encryptedData = cipher.update(req, 'utf-8', 'hex');
         encryptedData += cipher.final('hex');
+
+        console.log(encryptedData);
 
         return {
         iv: iv.toString('hex'),
@@ -16,16 +19,16 @@ const dataEncryptionController = {
 
         res.send("encrypt");
     },
-    decrypt: (req, res) => {
+    decrypt: (req) => {
 
         const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), Buffer.from(iv, 'hex'));
 
-        let decryptedData = decipher.update(encryptedData, 'hex', 'utf-8');
+        let decryptedData = decipher.update(req, 'hex', 'utf-8');
         decryptedData += decipher.final('utf-8');
 
         return decryptedData;
     },
-    generateKey: (req, res) => {
+    generateKey: (req) => {
 
         return crypto.scryptSync(password, 'salt', 32);
     },

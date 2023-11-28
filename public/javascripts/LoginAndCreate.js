@@ -76,10 +76,10 @@ function loginUser(){
         }
 
         //fetch the api and get the user
-        let URL = "http://localhost:3000/users/getUser"
+        let URL = "http://localhost:3000/users/getUsers"
 
         fetch(URL, {
-            method: 'GET',
+            method: 'POST',
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json'
