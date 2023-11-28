@@ -19,12 +19,25 @@ const dataEncryptionController = {
 
         res.send("encrypt");
     },
-    decrypt: (req) => {
+    decrypt: (req, password) => {
+
+        console.log(req)
+
+        console.log(req.hashedPassword)
+        console.log(req.iv)
+
+        let iv = req.iv;
+
+        const key = crypto.scryptSync(password, 'salt', 32);
 
         const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), Buffer.from(iv, 'hex'));
 
-        let decryptedData = decipher.update(req, 'hex', 'utf-8');
+        console.log(decipher)
+
+        let decryptedData = decipher.update(req.hashedPassword, 'hex', 'utf-8');
         decryptedData += decipher.final('utf-8');
+
+        console.log(decryptedData);
 
         return decryptedData;
     },

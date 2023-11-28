@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.post('/getUsers', userController.getUser);
+router.post('/getUser', userController.getUser);
 router.post('/addUser', userController.addUser);
 router.patch('/updateuser', userController.updateUser);
 router.delete('/deleteUser', userController.deleteUser);

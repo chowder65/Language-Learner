@@ -76,7 +76,7 @@ function loginUser(){
         }
 
         //fetch the api and get the user
-        let URL = "http://localhost:3000/users/getUsers"
+        let URL = "http://localhost:3000/users/getUser"
 
         fetch(URL, {
             method: 'POST',
@@ -84,9 +84,9 @@ function loginUser(){
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(res => {
+        }).then((res) => {
             if (res.status == 200) {
-                //go to index
+                console.log("here")
                 window.location.href = '/'
             }else{
                 console.log("something wrong with the User login Fetch")

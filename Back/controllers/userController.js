@@ -14,20 +14,28 @@ const client = new MongoClient(uri, {
 
 let userController = {
     getUser: async (req, res, next) => {
-        await client.connect();
+        try {
+            await client.connect();
 
-        let db = client.db('LingoLounge');
-        let collection = db.collection('User');
-
-        const query = req.body.userEmail;
-        const user = await collection.findOne({ userEmail: query });
-        if(dataEncryptionController.decrypt(user.userPassword) == req.body.userPassword){
-            res.send(true);
-        }else{
-            res.send(false);
+            let db = client.db('LingoLounge');
+            let collection = db.collection('User');
+            
+            const query = req.body.userEmail;
+            const user = await collection.findOne({ userEmail: query });
+            const unHashedPassword = dataEncryptionController.decrypt(user.userPassword, req.body.userPassword);
+            const inputPassword = req.body.userPassword;
+            console.log("unhashed: ", unHashedPassword)
+            console.log("db password: ", inputPassword)
+            if (unHashedPassword == inputPassword) {
+                console.log("PLEASE SENd RESPONSE")
+                res.sendStatus(200);
+            } else {
+                res.status(500).send;
+            }
+        } catch (e) {
+            console.log("error: ", e)
+            res.status(500).send;
         }
-
-        res.send(user);
     },
     addUser: async(req, res, next) => {
         await client.connect();
