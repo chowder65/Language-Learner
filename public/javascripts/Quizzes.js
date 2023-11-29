@@ -1,13 +1,21 @@
+//card
 document.getElementById('# pass in a card id').addEventListener('click', function(event) {
     event.preventDefault();
     console.log("A card has been clicked")
 
 
-    //fetch the quiz and show the returned data on the page
-    showQuizOnPage("#")//pass in a quizTopic
+    //get the user session data and check to see if the quiz they clicked has the lesson accosiated complted
+
+    if(data){
+        //fetch the quiz and show the returned data on the page
+        showQuizOnPage("#")//pass in a quizTopic
+    }else{
+        //if not completed dont show anything
+    }    
 })
 
 
+//modal button
 document.getElementById('# pass in modal button id to submit quiz').addEventListener('click', function(event) {
     event.preventDefault();
 
