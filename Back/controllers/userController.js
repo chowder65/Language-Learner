@@ -47,8 +47,11 @@ let userController = {
             userEmail: req.body.userEmail,
             userPassword: dataEncryptionController.encrypt(req.body.userPassword),
             userCompletedLanguages: req.body.userCompletedLanguages,
-            userLessonsCompleted: req.body.userLessonsCompleted,
-            userLessonProgress: req.body.userLessonProgress
+            spanishprogress : {
+                languageCompletion : 0,
+                lessonAnimals : false,
+                quizAnimals : false,
+            },
         };
         const user = await collection.insertOne(query);
         res.send(query + "Created")
@@ -64,8 +67,11 @@ let userController = {
             userEmail: req.body.userEmail,
             userPassword: req.body.userPassword,
             userCompletedLanguages: req.body.userCompletedLanguages,
-            userLessonsCompleted: req.body.userLessonsCompleted,
-            userLessonProgress: req.body.userLessonProgress
+            spanishprogress : {
+                languageCompletion : req.body.languageCompletion,
+                lessonAnimals : req.body.lessonAnimals,
+                quizAnimals : req.body.quizAnimals,
+            }
         };
         const user = await collection.updateOne(query);
         res.send(query + "Updated")
