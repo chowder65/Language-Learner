@@ -47,7 +47,7 @@ let userController = {
             userEmail: req.body.userEmail,
             userPassword: dataEncryptionController.encrypt(req.body.userPassword),
             userCompletedLanguages: req.body.userCompletedLanguages,
-            spanishprogress : {
+            spanishProgress : {
                 languageCompletion : 0,
                 lessonAnimals : false,
                 quizAnimals : false,
@@ -63,17 +63,22 @@ let userController = {
         let db = client.db('LingoLounge');
         let collection = db.collection('User');
 
-        const query = {
+        const filter = {
             userEmail: req.body.userEmail,
-            userPassword: req.body.userPassword,
-            userCompletedLanguages: req.body.userCompletedLanguages,
-            spanishprogress : {
-                languageCompletion : req.body.languageCompletion,
-                lessonAnimals : req.body.lessonAnimals,
-                quizAnimals : req.body.quizAnimals,
+        };
+
+        const update = {
+            $set: {
+                userCompletedLanguages: req.body.userCompletedLanguages,
+                spanishProgress : {
+                    languageCompletion : req.body.languageCompletion,
+                    lessonAnimals : req.body.lessonAnimals,
+                    quizAnimals : req.body.quizAnimals,
+                }
             }
         };
-        const user = await collection.updateOne(query);
+    
+        const user = await collection.findOneAndUpdate(filter,update);
         res.send(query + "Updated")
     },
     deleteUser: async(req, res, next) => {
