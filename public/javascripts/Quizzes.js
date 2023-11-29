@@ -12,11 +12,11 @@ document.getElementById('# pass in modal button id to submit quiz').addEventList
     event.preventDefault();
 
     //check the quiz answers
-    checkAnswers("#")//set to be the quiz progress identitfier for updating
+    checkAnswers("#", "spanish")//set to be the quiz progress identitfier for updating(IE: quizAnimals : false languageCompletion : spanishLanguageCompletion)
 })
 
 
-function checkAnswers(quizToCheck){
+function checkAnswers(quizToCheck, langauage){
     //call this when the user clicked the submit button in the generated pop up modal
     //get all elemnet values from the modal
 
@@ -77,19 +77,27 @@ function checkAnswers(quizToCheck){
     }
 }
 
-function updateUserProgress(QuizToUpdate){
+function updateUserProgress(QuizToUpdate, lanagauge){
 
-    //get the user email to update from the session
+    let langaugeProgressToUpdate = lanagauge + "LanguageCompletion"
+
+    //get the Email to query the user and update their progress
+    //get the users current LanguageCompletion
+
+    //NOT DONE YET NEEDS TO BE REVISTED
+    //#
+    //#
 
     User = {
-        userEmail: userEmail,
-        QuizToUpdate : true,
+        userEmail: userEmail, //get userEmail from session
+        [langaugeProgressToUpdate] : LanguageCompletion + 5 , //get laguagCompletion from session
+        [QuizToUpdate] : true,
     }
 
     let URL = "http://localhost:3000/users/updateUser";
 
     fetch(URL, {
-        method: "PACTH",
+        method: "PATCH",
         headers: {
             'Content-Type': 'application/json'
         },
@@ -149,9 +157,6 @@ function showQuizOnPage(quizTopic){
         .catch(error => console.error('Error:', error))
 
 };
-
-
-
 
 function getQuestion(questionId){
 
