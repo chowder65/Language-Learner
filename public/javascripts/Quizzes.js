@@ -31,15 +31,15 @@ function checkAnswers(quizToCheck, langauage){
     var score = 0;
 
     var question1Checked = document.getElementById('').checked
-    var question2Checked = document.getElementById("").checked
-    var question3Checked = document.getElementById("").checked
-    var question4Checked = document.getElementById("").checked
-    var question5Checked = document.getElementById("").checked
-    var question6Checked = document.getElementById("").checked
-    var question7Checked = document.getElementById("").checked
-    var question8Checked = document.getElementById("").checked
-    var question9Checked = document.getElementById("").checked
-    var question10Checked = document.getElementById("").checked
+    var question2Checked = document.getElementById('').checked
+    var question3Checked = document.getElementById('').checked
+    var question4Checked = document.getElementById('').checked
+    var question5Checked = document.getElementById('').checked
+    var question6Checked = document.getElementById('').checked
+    var question7Checked = document.getElementById('').checked
+    var question8Checked = document.getElementById('').checked
+    var question9Checked = document.getElementById('').checked
+    var question10Checked = document.getElementById('').checked
 
    
     if(question1Checked){
@@ -78,7 +78,7 @@ function checkAnswers(quizToCheck, langauage){
     if(score >= 7){
         console.log("User passed the quiz with a score of: " + score)
         //changes the users progress for this quiz to true
-        updateUserProgress(quizToCheck)
+        updateUserProgress(quizToCheck, langauage)
     }else{
         console.log("User Failed the quiz beacuse the scored less then 70%")
         //do nothing to change the progress
