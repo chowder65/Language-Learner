@@ -76,7 +76,7 @@ function loginUser(){
         }
 
         //fetch the api and get the user
-        let URL = "http://localhost:3000/users/getUser"
+        let URL = "http://localhost:3000/login"
 
         fetch(URL, {
             method: 'POST',
