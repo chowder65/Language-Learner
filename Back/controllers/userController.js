@@ -20,21 +20,20 @@ let userController = {
             let db = client.db('LingoLounge');
             let collection = db.collection('User');
             
-            const query = req.body.userEmail;
+            const query = req.userEmail;
             const user = await collection.findOne({ userEmail: query });
-            const unHashedPassword = dataEncryptionController.decrypt(user.userPassword, req.body.userPassword);
-            const inputPassword = req.body.userPassword;
+            const unHashedPassword = dataEncryptionController.decrypt(user.userPassword, req.userPassword);
+            const inputPassword = req.userPassword;
             console.log("unhashed: ", unHashedPassword)
             console.log("db password: ", inputPassword)
             if (unHashedPassword == inputPassword) {
                 console.log("PLEASE SENd RESPONSE")
-                res.sendStatus(200);
+                return 200
             } else {
-                res.status(500).send;
+                return 500
             }
         } catch (e) {
             console.log("error: ", e)
-            res.status(500).send;
         }
     },
     addUser: async(req, res, next) => {
