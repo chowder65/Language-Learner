@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   res.render('LoginAndRegister', { title: 'Express' });
 });
 
-router.post('/', async function(req, res) {
+router.post('/', function(req, res) {
   try{
     let user = req.body;
     console.log(user);

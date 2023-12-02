@@ -20,7 +20,7 @@ function createUser(){
     let PasswordTwo = document.getElementById("CreatePasswordTwo").value
     let Email = document.getElementById("CreateEmail").value;
 
-    if(Password == PasswordTwo && checkEmial(Email) && checkPassowrd(Password)){
+    if(Password === PasswordTwo && checkEmial(Email) && checkPassowrd(Password)){
         let data = {
             "userEmail" : Email,
             "userPassword" : Password,
@@ -56,10 +56,10 @@ function checkEmial(email){
     return Regex.test(email)
 }
 
-function checkPassowrd(passowrd,){
+function checkPassowrd(password,){
     //one uppercase, one lowercase, 1 special character, 8 character min
     const Regex =  new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[^\w\s]).{8,}$")
-    return Regex.test(passowrd)
+    return Regex.test(password)
 }
 
 
