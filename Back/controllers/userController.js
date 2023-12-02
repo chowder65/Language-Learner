@@ -71,7 +71,7 @@ let userController = {
             $set: {
                 userCompletedLanguages: req.body.userCompletedLanguages,
                 spanishProgress : {
-                    languageCompletion : req.body.languageCompletion,
+                    languageCompletion : req.body.spanishLanguageCompletion,
                     lessonAnimals : req.body.lessonAnimals,
                     quizAnimals : req.body.quizAnimals,
                 }

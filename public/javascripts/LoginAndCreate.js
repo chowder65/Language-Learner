@@ -20,7 +20,7 @@ function createUser(){
     let PasswordTwo = document.getElementById("CreatePasswordTwo").value
     let Email = document.getElementById("CreateEmail").value;
 
-    if(Password == PasswordTwo && checkEmial(Email) && checkPassowrd(Password)){
+    if(Password === PasswordTwo && checkEmial(Email) && checkPassowrd(Password)){
         let data = {
             "userEmail" : Email,
             "userPassword" : Password,
@@ -52,14 +52,14 @@ function createUser(){
 };
 
 function checkEmial(email){
-    const Regex = new RegExp("^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$");
+    const Regex = new RegExp("^[\\w\\.-]+@[a-zA-Z\\d\\.-]+\\.[a-zA-Z]{2,}$");
     return Regex.test(email)
 }
 
-function checkPassowrd(passowrd,){
+function checkPassowrd(password,){
     //one uppercase, one lowercase, 1 special character, 8 character min
-    const Regex =  new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[^\w\s]).{8,}$")
-    return Regex.test(passowrd)
+    const Regex =  new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{8,}$")
+    return Regex.test(password)
 }
 
 
@@ -76,7 +76,7 @@ function loginUser(){
         }
 
         //fetch the api and get the user
-        let URL = "http://localhost:3000/users/getUser"
+        let URL = "http://localhost:3000/login"
 
         fetch(URL, {
             method: 'POST',
