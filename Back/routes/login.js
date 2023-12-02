@@ -16,7 +16,9 @@ router.post('/', function(req, res) {
 
     if(status == 200){
       //if the data is good then create a session and log them in!!
-      req.session.user = req.body //create the session
+      req.session.user = {
+        userEmail : req.body.userEmail
+      } 
       console.log(req.session.user)
 
       res.status(200).send()

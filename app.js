@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cons = require('consolidate');
+var session = require('express-session')
 
 var indexRouter = require('./Back/routes/index');
 var usersRouter = require('./Back/routes/users');
@@ -30,6 +31,11 @@ app.use('/login', loginRouter);
 app.use('/lesson', lessonRouter);
 app.use('/quiz', quizRouter);
 app.use('/questions', questionRouter);
+app.use(session({
+  secret: 'UserLoginSession', //can be anything, needs to be secure and realted to project
+  resave: false,
+  saveUninitialized: true,
+}))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
