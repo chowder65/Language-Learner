@@ -52,13 +52,13 @@ function createUser(){
 };
 
 function checkEmial(email){
-    const Regex = new RegExp("^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$");
+    const Regex = new RegExp("^[\\w\\.-]+@[a-zA-Z\\d\\.-]+\\.[a-zA-Z]{2,}$");
     return Regex.test(email)
 }
 
 function checkPassowrd(password,){
     //one uppercase, one lowercase, 1 special character, 8 character min
-    const Regex =  new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[^\w\s]).{8,}$")
+    const Regex =  new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{8,}$")
     return Regex.test(password)
 }
 
