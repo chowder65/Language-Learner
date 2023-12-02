@@ -1,5 +1,6 @@
 import whisper
 
-model = whisper.load_model("base")
-result = model.transcribe("C:\\Users\\cmcculley\\Desktop\\Whisper.IO-Test\\audio.wav")
-print(result["text"])
+def loadFile(file):
+    model = whisper.load_model("base")
+    result = model.transcribe(file)
+    print(result["text"])

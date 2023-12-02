@@ -1,3 +1,4 @@
 django==4.2
 openai-whisper==20231117
-jangorestframework==latest
+pymongo[srv]==4.6.1
+fastapi==0.104.1
