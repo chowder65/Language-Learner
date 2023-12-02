@@ -8,7 +8,7 @@ document.getElementById('# pass in a card id').addEventListener('click', functio
 
     if(data){
         //fetch the quiz and show the returned data on the page
-        showQuizOnPage("#")//pass in a quizTopic
+        showQuizOnPage("quizAnimals")//pass in a quizTopic
     }else{
         //if not completed dont show anything
     }    
@@ -20,8 +20,27 @@ document.getElementById('# pass in modal button id to submit quiz').addEventList
     event.preventDefault();
 
     //check the quiz answers
-    checkAnswers("#", "spanish")//set to be the quiz progress identitfier for updating(IE: quizAnimals : false languageCompletion : spanishLanguageCompletion)
+    checkAnswers("quizAnimals", "spanish")//set to be the quiz progress identitfier for updating(IE: quizAnimals : false languageCompletion : spanishLanguageCompletion)
 })
+
+function getSession(){
+
+    let URL = "localhost:3000/login"
+
+    fetch(URL, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(res => {
+        if(res.status == 200){
+            return res.json
+        }else{
+            console.log("error getting user session")
+        }
+    })
+}
 
 
 function checkAnswers(quizToCheck, langauage){

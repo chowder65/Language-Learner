@@ -2,24 +2,29 @@ var express = require('express');
 var router = express.Router();
 const userController = require('../controllers/userController');
 
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('LoginAndRegister', { title: 'Express' });
 });
 
-router.post('/', function(req, res) {
+router.get('/session', (req, res) => {
+  const userData = req.session.user;
+  res.json(userData);
+});
+
+router.post('/',  async function(req, res) {
   try{
-    let user = req.body;
-    console.log(user);
+    let user = req.body
+    console.log("body" + req.body)
+    console.log("user" + user);
 
     let status = userController.loginUser(user)
 
-    if(status == 200){
+    if( status === 200){
       //if the data is good then create a session and log them in!!
-      req.session.user = {
-        userEmail : req.body.userEmail
-      } 
-      console.log(req.session.user)
+      req.session.user = req.body
+      console.log("session" + req.session.user)
 
       res.status(200).send()
     }else{
@@ -27,7 +32,7 @@ router.post('/', function(req, res) {
     }
     
   }catch(err){
-
+    console.log(err)
     res.sendStatus(500)
   }
 });
