@@ -12,6 +12,7 @@ var loginRouter = require('./Back/routes/login');
 var lessonRouter = require('./Back/routes/lesson');
 var quizRouter = require('./Back/routes/quiz');
 var questionRouter = require('./Back/routes/questions');
+var audioRouter = require('./Back/routes/audio');
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use('/login', loginRouter);
 app.use('/lesson', lessonRouter);
 app.use('/quiz', quizRouter);
 app.use('/questions', questionRouter);
+app.use('/audio', audioRouter);
 app.use(session({
   secret: 'UserLoginSession', //can be anything, needs to be secure and realted to project
   resave: false,
