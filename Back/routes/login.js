@@ -12,7 +12,7 @@ router.post('/', function(req, res) {
     let user = req.body;
     console.log(user);
 
-    let status = userController.getUser(user)
+    let status = userController.loginUser(user)
 
     if(status == 200){
       //if the data is good then create a session and log them in!!

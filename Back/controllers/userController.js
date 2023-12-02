@@ -13,7 +13,7 @@ const client = new MongoClient(uri, {
 
 
 let userController = {
-    getUser: async (req, res, next) => {
+    loginUser: async (req, res, next) => {
         try {
             await client.connect();
 
@@ -90,7 +90,17 @@ let userController = {
         const query = req.body.userEmail;
         const user = await collection.deleteOne({ userEmail: query });
         res.send(user);    
-    }
+    },
+    getUser: async(req, res, next) => {
+        await client.connect();
+
+        let db = client.db('LingoLounge');
+        let collection = db.collection('User');
+
+        const query = req.body.userEmail;
+        const user = await collection.findOne({ userEmail: query });
+        res.send(user);
+    },
 }
 
 
