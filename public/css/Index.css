@@ -33,7 +33,7 @@
   background: #C5DFF8;
   padding: 15px 10px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
-  transition: all 0.4s ease;
+  /*transition: all 0.4s ease;*/
 }
 .logo_name {
   font-size: 22px;
@@ -64,7 +64,7 @@
   width: 20px;
   border-radius: 25px;
   background: #aaa;
-  transition: all 0.3s ease;
+  /*transition: all 0.3s ease;*/
 }
 .menu_title .line {
   opacity: 0;
@@ -118,12 +118,16 @@
 /* Modal Styles */
 .modal-dialog {
   max-width: 500px; /* Adjust the width as needed */
+  z-index: 1060;
+  position: static;
 }
 
 .modal-content {
   background-color: #f8f9fa;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  z-index: 3000;
+  position: static;
 }
 
 .modal-header {
@@ -132,17 +136,40 @@
   padding: 10px 20px;
   font-family: "Poppins", sans-serif;
   font-weight: 500;
+  z-index: 1050;
+  position: static;
 }
 
 .modal-body {
   padding: 20px;
   font-family: "Poppins", sans-serif;
   color: #333;
+  z-index: 1050;
+  position: static;
 }
 
 .modal-footer {
   background-color: #f8f9fa;
   padding: 10px 20px;
+  z-index: 1050;
+  position: static;
+}
+
+.modal-backdrop {
+  z-index: 1030 !important;
+  pointer-events: none;
+  display: none;
+}
+
+.modal-container {
+  z-index: -1;
+  position: static;
+}
+
+.modal.fade.show {
+  z-index: 1040;
+  transform: none;
+  opacity: 1;
 }
 
 /* Button styles for modal */
@@ -169,7 +196,7 @@
 .sidebar .link.flex.btn.btn-link {
   background-color: transparent;
   color: #707070;
-  transition: color 0.3s ease;
+  /*transition: color 0.3s ease;*/
 }
 
 .sidebar .link.flex.btn.btn-link:hover {
@@ -233,7 +260,7 @@
   border-radius: 4px;
   padding: 10px 15px;
   margin: 0 5px;
-  transition: background-color 0.3s;
+  /*transition: background-color 0.3s;*/
 }
 
 .lesson-quiz-modal .modal-footer button:hover {
@@ -278,7 +305,7 @@ H1 {
     cursor: pointer;
     text-decoration: none;
     border: 2px solid transparent;
-    transition: border 0.5s ease;
+    /*transition: border 0.5s ease;*/
 }
 .card-list .card-item:hover {
     border: 2px solid #000;
@@ -327,7 +354,7 @@ H1 {
     border: 1px solid #000;
     border-radius: 50%;
     margin-top: 40px;
-    transition: 0.2s ease;
+    /*transition: 0.2s ease;*/
 }
 .card-list .card-item:hover .arrow  {
     background: #000;
