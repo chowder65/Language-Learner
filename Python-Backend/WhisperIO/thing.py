@@ -7,6 +7,6 @@ def loadFile(file):
     result = model.transcribe(file)
     print(result["text"])
 
-    os.remove("output_audio.mp3")
+    os.remove("./output_audio.mp3")
 
     return result["text"]

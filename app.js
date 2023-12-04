@@ -14,7 +14,6 @@ var quizRouter = require('./Back/routes/quiz');
 var questionRouter = require('./Back/routes/questions');
 var audioRouter = require('./Back/routes/audio');
 
-
 var app = express();
 
 app.engine('html', cons.swig);
@@ -26,6 +25,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: 'UserLoginSession', //can be anything, needs to be secure and realted to project
+  resave: false,
+  saveUninitialized: true,
+}))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -34,11 +38,8 @@ app.use('/lesson', lessonRouter);
 app.use('/quiz', quizRouter);
 app.use('/questions', questionRouter);
 app.use('/audio', audioRouter);
-app.use(session({
-  secret: 'UserLoginSession', //can be anything, needs to be secure and realted to project
-  resave: false,
-  saveUninitialized: true,
-}))
+app.use('/test', require('./Back/routes/test'));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

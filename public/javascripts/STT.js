@@ -1,21 +1,66 @@
-let URL = "http://localhost:3000/audio/addAudio"
 
-let data = {
-    "audio" : audioData
+
+let mediaRecorder;
+let audioChunks = [];
+
+async function startRecording() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true
+        });
+
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = event => {
+            if (event.data.size > 0) {
+                audioChunks.push(event.data);
+            }
+        };
+
+        mediaRecorder.onstop = async() => {
+            const audioBlob = new Blob(audioChunks, {
+                type: 'audio/mp3'
+            });
+            const audioUrl = URL.createObjectURL(audioBlob);
+            document.getElementById('audioPlayer').src = audioUrl;
+
+            await saveRecordingToServer(audioBlob);
+        };
+
+        mediaRecorder.start();
+    } catch (error) {
+        console.error('Error accessing microphone:', error);
+    }
 }
-    
-        fetch(URL, {
+
+function stopRecording() {
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+    }
+}
+
+async function saveRecordingToServer(audioBlob) {
+    let formData = new FormData();
+
+    await new Promise((resolve) => {
+        formData.append('audio', audioBlob);
+        resolve();
+    });
+    console.log(formData);
+
+    fetch('/audio/addAudio', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-            })
-            .then(res => {
-                if(res.status == 200){
-                    console.log("User Created!")
-                }else{
-                    console.log("Something wrong with User Creation Fetch")
-                }
-            })
-            .catch(error => console.error('Error:', error))
+            body: formData
+        })
+        .then(response => {
+    if (response.ok) {
+        console.log('Success:', response.statusText);
+    } else {
+        console.error('Error:', response.statusText);
+    }
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+}
+

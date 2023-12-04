@@ -16,14 +16,15 @@ router.get('/session', (req, res) => {
 router.post('/',  async function(req, res) {
   try{
     let user = req.body
-    console.log("body" + req.body)
     console.log("user" + user);
 
-    let status = userController.loginUser(user)
+    let status = await userController.loginUser(user)
 
     if( status === 200){
       //if the data is good then create a session and log them in!!
-      req.session.user = req.body
+      var session;
+      session = req.session
+      session.user = user.userEmail
       console.log("session" + req.session.user)
 
       res.status(200).send()
