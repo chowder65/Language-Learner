@@ -17,8 +17,8 @@ let quizController = {
         let db = client.db('LingoLounge');
         let collection = db.collection('Quizzes');
 
-        const query = req.body.quizTopic;
-        const quiz = await collection.findOne({ quizTopic: query });
+        const query = req.body.quizId;
+        const quiz = await collection.findOne({ quizId: query });
         res.send(quiz);
     },
     addQuiz: async(req, res, next) => {

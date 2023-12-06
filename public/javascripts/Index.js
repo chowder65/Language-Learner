@@ -1,26 +1,27 @@
+//import { response } from "express";
+
+
+
+
 // fetch lesson 
 async function fetchLessonDetails(lessonId) {
     let data = {
         lessonId: lessonId
     }
 
-
     const URL = "http://localhost:3000/lesson/getLesson";
 
-    fetch(URL ,{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(res => {
+    try{
+        const res = await fetch(URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        console.log(res);
         return res.json();
-    })
-    .then(data => {
-        console.log(data);
-        return data;
-    })
+    }catch(err){
+        console.log(err);
+    }
 }
 
 // fetch quiz
@@ -32,35 +33,40 @@ async function fetchQuizDetails(quizId) {
 
     const URL = "http://localhost:3000/quiz/getQuiz";
 
-    fetch(URL ,{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(res => {
+    try{
+        const res = await fetch(URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        console.log(res);
         return res.json();
-    })
-    .then(data => {
-        console.log(data);
-        return data;
-    })
+    }catch(err){
+        console.log(err);
+    }
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const lessonDetails = await response.json();
+    console.log('lesson Deatails' + lessonDetails);
+    return lessonDetails;
 }
 
 // create and show lesson modal
-async function createAndShowLessonModal(lessonDetails) {
+async function createAndShowLessonModal(lessonId, lessonDetails, data) {
     const modal = document.createElement('div');
     modal.className = 'modal lesson-quiz-modal fade show';
-    modal.id = `modal-${lessonDetails.lessonId}`;
+    modal.id = `modal-${lessonDetails.lesson.lessonId}`;
     modal.setAttribute('tabindex', '-1');
-    modal.setAttribute('aria-labelledby', `${lessonDetails.lessonId}Label`);
+    modal.setAttribute('aria-labelledby', `${lessonDetails.lesson.lessonId}Label`);
     modal.setAttribute('aria-hidden', 'true');
     modal.innerHTML = `
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">${lessonDetails.lessonTopic}</h5>
+                    <h5 class="modal-title">${lessonDetails.lesson.lessonTopic}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -76,18 +82,30 @@ async function createAndShowLessonModal(lessonDetails) {
     const tabsContainer = modal.querySelector('.modal-body');
     tabsContainer.innerHTML = '';
 
+    //create tab container
+    const tabElement = createTabElement();//return ul and tab
+
     const difficultyLevels = ['simpleQuestions', 'easyQuestions', 'mediumQuestions', 'hardQuestions', 'extremeQuestions'];
 
     for (const level of difficultyLevels) {
-        if (lessonDetails[level]) {
+        if (lessonDetails.lesson[level]) {
             const tabContent = [];
-            for (const questionId of lessonDetails[level]) {
-                const questionDetails = getQuestion(questionId);
+            for (const questionId of lessonDetails.lesson[level]) {
+                const questionDetails = await getQuestion(questionId);
                 tabContent.push(createLessonQuestionElement(questionDetails));
             }
 
-            const tab = createTabElement(level, tabContent);
-            tabsContainer.appendChild(tab);
+            //make each li and append it to the ul element
+            const listElement = createListElement(level);//create li element
+            tabElement.ul.appendChild(listElement);//append li to ul
+
+
+            //append each question data div to tabElement
+            const questionElement = createQuestionsContainerElement(level, tabContent);//append to tab
+            tabElement.tabContent.appendChild(questionElement);
+
+            //const tabElement = createTabElement(level, tabContent);
+            tabsContainer.appendChild(tabElement.tabContent);
         }
     }
 
@@ -99,26 +117,74 @@ async function createAndShowLessonModal(lessonDetails) {
     });
 }
 
-// create a tab element for a group of questions
-function createTabElement(difficultyLevel, tabContent) {
-    const tab = document.createElement('div');
-    tab.className = 'lesson-group-tab';
-    tab.id = `tab-${difficultyLevel}`;
+function createListElement(difficultyLevel) {
+    const li = document.createElement('li');
+    li.className = 'nav-item';
+    li.role = 'presentation';
 
-    const title = document.createElement('h4');
-    title.innerText = `Difficulty: ${difficultyLevel}`;
-    tab.appendChild(title);
+    const button = document.createElement('button');
+    button.className = 'nav-link';
+    button.dataset.bsToggle = 'tab';
+    button.dataset.bsTarget = `#tab${difficultyLevel}`;
+    button.type = 'button';
+    button.setAttribute('role', 'tab');
+    button.setAttribute('aria-controls', `tab${difficultyLevel}`);
+    button.ariaSelected = 'true';
+    button.innerText = `Difficulty: ${difficultyLevel}`;
+    button.id = `tab${difficultyLevel}`;
 
+    if (difficultyLevel === "simpleQuestions") {
+        button.className += ' active';
+        button.ariaSelected = 'true';
+    } else {
+        button.ariaSelected = 'false';
+    }
+
+    li.appendChild(button);
+
+    return li;
+}
+
+function createQuestionsContainerElement(difficultyLevel, tabContent) {
     const questionsContainer = document.createElement('div');
-    questionsContainer.className = 'questions-container';
+    questionsContainer.id = `tab${difficultyLevel}`;
+    questionsContainer.setAttribute('role', 'tabpanel');
+    questionsContainer.className = 'tab-pane fade';
+    questionsContainer.setAttribute('aria-labelledby', `tab${difficultyLevel}`);
+
+    if (difficultyLevel === "simpleQuestions") {
+        questionsContainer.classList.add('show', 'active');
+    }
+
+
+    questionsContainer.classList.add = `questions-container-${difficultyLevel}`;
     tabContent.forEach(questionElem => {
-        questionsContainer.appendChild(questionElem);
+        questionsContainer.append(questionElem);
     });
 
-    tab.appendChild(questionsContainer);
+    return questionsContainer;
 
-    return tab;
 }
+
+// create a tab element for a group of questions
+function createTabElement() {
+
+    const tabContent = document.createElement('div');
+    tabContent.className = 'tab-content';
+    tabContent.id = 'myTabContent';
+
+    const ul = document.createElement('ul');
+    ul.className = 'nav nav-tabs';
+    ul.role = 'tablist';
+
+    //li.appendChild(button);
+    //ul.appendChild(li);
+    tabContent.appendChild(ul);
+    
+
+    return { ul, tabContent};
+}
+
 
 // question container for lesson
 function createLessonQuestionElement(questionDetails) {
@@ -160,7 +226,7 @@ function createLessonQuestionElement(questionDetails) {
 }
 
 // create and show quiz modal
-async function createAndShowQuizModal(quizDetails) {
+async function createAndShowQuizModal(quizId, quizDetails, datwo) {
     const modal = document.createElement('div');
     modal.className = 'modal lesson-quiz-modal fade show';
     modal.id = `modal-${quizDetails.quizId}`;
@@ -178,7 +244,7 @@ async function createAndShowQuizModal(quizDetails) {
                     <!-- where quiz questions will show  -->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Submit</button>
+                    <button type="button" id="submitBtnQuiz" class="btn btn-primary">Submit</button>
                 </div>
             </div>
         </div>
@@ -192,7 +258,7 @@ async function createAndShowQuizModal(quizDetails) {
 
     // add questions/answers to modal
     for (const questionId of quizDetails.questionIds) {
-        const questionDetails = getQuestion(questionId);
+        const questionDetails = await getQuestion(questionId);
         const questionContainer = createQuizQuestionElement(questionDetails); 
         questionsContainer.appendChild(questionContainer); 
     }
@@ -230,7 +296,8 @@ function createQuizQuestionElement(questionDetails) {
         radioInput.type = 'radio';
         radioInput.name = `answer-${questionDetails.questionId}`;
         radioInput.value = answer.isCorrect;
-        radioInput.id = `answer-${questionDetails.questionId}-${index}`;
+        radioInput.id = `answer-${answer.isCorrect}${index}`;
+        //${questionDetails.questionId}-${index}
 
         const label = document.createElement('label');
         label.htmlFor = `answer-${questionDetails.questionId}-${index}`;
@@ -302,145 +369,82 @@ document.querySelectorAll('.card-item').forEach(card => {
         
         if (lessonId) {
             const lessonDetails = await fetchLessonDetails(lessonId);
+            console.log(lessonDetails);//lesson json data
 
-            const simpleLessonIds = lessonDetails.simpleQuestions;//array of simple question ids (5 questions)
-            const easyLessonIds = lessonDetails.easyQuestions;//array of easy question ids (5 questions)
-            const mediumLessonIds = lessonDetails.mediumQuestions;//array of medium question ids (5 questions)
-            const hardLessonIds = lessonDetails.hardQuestions;//array of hard question ids (5 questions)
-            const extremeLessonIds = lessonDetails.extremeQuestions;//array of extreme question ids (5 questions)
+            const simpleLessonIds = lessonDetails.lesson.simpleQuestions;//array of simple question ids (5 questions)
+            console.log(simpleLessonIds);
+            const easyLessonIds = lessonDetails.lesson.easyQuestions;//array of easy question ids (5 questions)
+            const mediumLessonIds = lessonDetails.lesson.mediumQuestions;//array of medium question ids (5 questions)
+            const hardLessonIds = lessonDetails.lesson.hardQuestions;//array of hard question ids (5 questions)
+            const extremeLessonIds = lessonDetails.lesson.extremeQuestions;//array of extreme question ids (5 questions)
 
-            simpleLessonIds.array.forEach(id => {
-                let question = getQuestion(id);
-                console.log(question);//question json data
+            for (const id of simpleLessonIds) {
+                let question = await getQuestion(id);
+                //console.log(question); 
+        
+                for (let i = 1; i <= 5; i++) {
+                    let propNumber = "lessonSimple" + i.toString();
+                    data[propNumber] = question;
 
-                for(let i = 1; i <= 5; i++){
-                    if(data.lessonSimple[i] == {}){
-                        data.lessonSimple[i] = question;
-                        break;
-                    }
-                }
-            })
+            }
+        }
 
-            easyLessonIds.array.forEach(id => {
-                let question = getQuestion(id);
-                console.log(question);//question json data
+            for (const id of easyLessonIds) {
+                let question = await getQuestion(id);
+                //console.log(question); 
+        
+                for (let i = 1; i <= 5; i++) {
+                    let propNumber = "lessonEasy" + i.toString();
+                    data[propNumber] = question;
+                    
+            }
+        }
+         for (const id of mediumLessonIds) {
+                let question = await getQuestion(id);
+                //console.log(question); 
+        
+                for (let i = 1; i <= 5; i++) {
+                    let propNumber = "lessonMedium" + i.toString();
+                    data[propNumber] = question;
+                    
+            }
+        }
+            for (const id of hardLessonIds) {
+                let question = await getQuestion(id);
+                //console.log(question); 
+        
+                for (let i = 1; i <= 5; i++) {
+                    let propNumber = "lessonHard" + i.toString();
+                    data[propNumber] = question;
+                    
+            }
+        }
+            for (const id of extremeLessonIds) {
+                let question = await getQuestion(id);
+                //console.log(question); 
+        
+                for (let i = 1; i <= 5; i++) {
+                    let propNumber = "lessonExtreme" + i.toString();
+                    data[propNumber] = question;
+                    
+            }
+        }
 
-                for(let i = 1; i <= 5; i++){
-                    if(data.lessonEasy[i] == {}){
-                        data.lessonEasy[i] = question;
-                        break;
-                    }
-                }
-            })
-
-            mediumLessonIds.array.forEach(id => {
-                let question = getQuestion(id);
-                console.log(question);//question json data
-
-                for(let i = 1; i <= 5; i++){
-                    if(data.lessonMedium[i] == {}){
-                        data.lessonMedium[i] = question;
-                        break;
-                    }
-                }
-            })
-
-            hardLessonIds.array.forEach(id => {
-                let question = getQuestion(id);
-                console.log(question);//question json data
-
-                for(let i = 1; i <= 5; i++){
-                    if(data.lessonHard[i] == {}){
-                        data.lessonHard[i] = question;
-                        break;
-                    }
-                }
-            })
-
-            extremeLessonIds.array.forEach(id => {
-                let question = getQuestion(id);
-                console.log(question);//question json data
-
-                for(let i = 1; i <= 5; i++){
-                    if(data.lessonExtreme[i] == {}){
-                        data.lessonExtreme[i] = question;
-                        break;
-                    }
-                }
-            })
-
+        
             if (lessonDetails) {
                 createAndShowLessonModal(lessonId, lessonDetails, data);//lesson1, jsonData, true
             }
-        }else if (quizId) {
+        }else if(quizId) {
             const quizDetails = await fetchQuizDetails(quizId);
 
-            const simpleQuizIds = quizDetails.simpleQuestions;//array of simple question ids (2 questions)
-            const easyQuizIds = quizDetails.easyQuestions;//array of easy question ids (2 questions)
-            const mediumQuizIds = quizDetails.mediumQuestions;//array of medium question ids (2 questions)
-            const hardQuizIds = quizDetails.hardQuestions;//array of hard question ids (2 questions)
-            const extremeQuizIds = quizDetails.extremeQuestions;//array of extreme question ids (2 questions)
+            const quizQuestionIds = quizDetails.questionIds;//array of simple question ids (2 questions)
 
-            simpleQuizIds.array.forEach(id => {
-                let question = getQuestion(id);
-                console.log(question);//question json data
-
-                for(let i = 1; i <= 2; i++){
-                    if(datwo.quizSimple[i] == {}){
-                        datwo.quizSimple[i] = question;
-                        break;
-                    }
-                }
-            })
-
-            easyQuizIds.array.forEach(id => {
-                let question = getQuestion(id);
-                console.log(question);//question json data
-
-                for(let i = 1; i <= 2; i++){
-                    if(datwo.quizEasy[i] == {}){
-                        datwo.quizEasy[i] = question;
-                        break;
-                    }
-                }
-            })
-
-            mediumQuizIds.array.forEach(id => {
-                let question = getQuestion(id);
-                console.log(question);//question json data
-
-                for(let i = 1; i <= 2; i++){
-                    if(datwo.quizMedium[i] == {}){
-                        datwo.quizMedium[i] = question;
-                        break;
-                    }
-                }
-            })
-
-            hardQuizIds.array.forEach(id => {
-                let question = getQuestion(id);
-                console.log(question);//question json data
-
-                for(let i = 1; i <= 2; i++){
-                    if(datwo.quizHard[i] == {}){
-                        datwo.quizHard[i] = question;
-                        break;
-                    }
-                }
-            })
-
-            extremeQuizIds.array.forEach(id => {
-                let question = getQuestion(id);
-                console.log(question);//question json data
-
-                for(let i = 1; i <= 2; i++){
-                    if(datwo.quizExtreme[i] == {}){
-                        datwo.quizExtreme[i] = question;
-                        break;
-                    }
-                }
-            })
-
+                quizQuestionIds.forEach(async id => {
+                    console.log(id);
+                    let question = await getQuestion(id);
+                    datwo[id] = question;
+                })
+    
             if (quizDetails) {
                 createAndShowQuizModal(quizId, quizDetails, datwo);//quiz1, jsonData, false
             }
@@ -450,30 +454,31 @@ document.querySelectorAll('.card-item').forEach(card => {
 
 //alyssa
 
-function getQuestion(questionId){
+async function getQuestion(questionId){
 
-    let URL = "http://localhost:3000/questions/getQuestion";
+    try {
 
-    data = {
-        questionId: questionId
-    }
-
-    fetch(URL, {
-        method: "POST",
-        headers: {
-            'Content-Type' : 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(res => {
-
-        if(res){
-            //return the question found
-            console.log(res.json())
-            return res.json();
-        }else{
-            console.log("Something wrong with finding the question Fetch")
+        let URL = "http://localhost:3000/questions/getQuestion";
+        let data = {
+            questionId: questionId
         }
-    })
+        
+        const response = await fetch(URL, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching question:", error);
+        throw error; // Rethrow to handle in the calling context
+    }
 }
 
