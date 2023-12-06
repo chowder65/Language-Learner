@@ -97,3 +97,4 @@ function loginUser(){
         console.error('Error fetching /index', error)
     }
 }
+
