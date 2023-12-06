@@ -1,0 +1,284 @@
+openapi: '3.0.2'
+info:
+  title: User Controller API
+  version: '0.0.1'
+servers:
+  - url: http://localhost:3000
+
+paths:
+  /users/getUser/{username}:
+    get:
+      summary: Get a users data by username will be used to validate password and other functions
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: Username for the session
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK - The session with that username exists
+        '404':
+          description: Not found - The sessions with that username does not exist
+  /users/adduser:
+    post:
+      summary: Adds a new user to the database with the given email and password
+      description: Validates the email and the password and creates a new user if the email is not already in use
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: Username to validate for session creation
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Password'
+      responses:
+        '201':
+          description: Created - The session was created
+        '400':
+          description: Bad request - Missing parts or all of requestBody
+        '403':
+          description: Forbidden - Wrong credentials
+    delete:
+      summary: Deletes a session
+      description: Will only destroy the session if the username matches the session
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: Username to delete the session
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content - The session was deleted
+        '404':
+          description: Not found - The session with that username does not exist
+  /users/{username}:
+    get:
+      summary: Retrieve all data for the user in the path parameter
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: Username to get the information for
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Password'
+      responses:
+        '200':
+          description: OK - Sends all data stored for the user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserData'
+        '400':
+          description: Bad request - Missing requestBody
+        '403':
+          description: Forbidden - Wrong credentials
+    post:
+      summary: Create an account with the specified username and password
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: Username to create with account
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Password'
+      responses:
+        '201': 
+          description: Created - User successfully createdx 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserData'
+        '400':
+          description: Bad request - missing requestBody
+        '409':
+          description: Conflict - Username already taken
+    delete:
+      summary: Delete an account with specified username
+      description: Will fail if password doesn't match
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: Username of account to be deleted
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Password'
+      responses:
+        '204':
+          description: No Reponse - User successfully deleted
+        '400':
+          description: Bad request - Missing requestBody
+        '403': 
+          description: Forbidden - Wrong credentials
+    put:
+      summary: Change the password of the account
+      parameters:
+      - name: username
+        in: path
+        required: true
+        description: Username of account to be updated
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserData'
+      responses:
+        '200':
+          description: OK - Successfully updated
+        '400':
+          description: Bad request - Missing requestBody
+        '403':
+          description: Forbidden - Wrong credentials
+
+components: 
+  schemas:
+    Password:
+      type: object
+      properties:
+        password:
+          type: string
+          example: 'password123'
+
+    UserData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: uuid v4 prefixed with a 'u'
+          example: 'u45a9d6a1-1b52-48dc-910d-dd84e1a6559c'
+        username:
+          type: string
+          example: 'john_doe'
+        dateCreated:
+          type: integer
+          description: unix time (seconds since epoch)
+          example: '1700458466'
+        completedQuizes:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompletedQuiz'
+        #Add image to list of properties later
+
+    UpdateUserData:
+      type: object
+      properties:
+        password:
+          type: string
+          example: 'oldPassword123'
+        newPassword:
+          type: string
+          example: 'newPassword123'
+        #Add image to list of properties later
+
+    CompletedQuiz:
+      type: object
+      properties:
+        quizId:
+          type: string
+          description: uuid v4 prefixed with a 'q'
+          example: 'q812c47c9-8a58-49bc-8a14-4e6af6b566f0'
+        dateTaken:
+          type: integer
+          description: unix time (seconds since epoch)
+          example: '1700458954'
+        result:
+          $ref: '#/components/schemas/QuizResult'
+
+    QuizResult:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'Hufflepuff'
+        description:
+          type: string
+          example: 'Congrats you''re a normie!'
+
+    QuizRequest:
+      type: object
+      properties:
+        quizId:
+          type: string
+          description: uuid v4 prefixed with a 'q'
+          example: 'q57f71583-7e73-4a22-b7fc-4b95b4a6de84'
+    
+    Quiz:
+      type: object
+      properties:
+        id:
+          type: string
+          description: uuid v4 prefixed with a 'q'
+          example: 'q57f71583-7e73-4a22-b7fc-4b95b4a6de84'
+        name:
+          type: string
+          description: name of the quiz
+          example: 'Harry Potter Sorting House Quiz'
+        description:
+          type: string
+          description: accompanying description for the quiz
+          example: 'This quiz sorts you into the Harry Potter house that fits you best'
+        dateCreated:
+          type: integer
+          description: unix time (seconds since epoch)
+          example: '1700458954'
+        creator:
+          type: string
+          description: uuid v4 prefixed with a 'u', aligned with the user that created the quiz
+          example: '9c41e8eb-de7f-4fdc-a2b0-d88b98dc3357'
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuizQuestion'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuizResult'
+
+    QuizQuestion:
+      type: object
+      properties:
+        prompt:
+          type: string
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuizAnswer'
+
+    QuizAnswer:
+      type: object
+      properties:
+        option:
+          type: string
+        result:
+          type: integer
+        weight:
+          type: integer
