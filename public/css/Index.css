@@ -390,11 +390,13 @@ H1 {
               0 1px rgba(255,255,255,0.8);
   animation: animate 1s cubic-bezier(1,0,0.5,1) forwards;
 }
+
 @keyframes animate {
   100%{
     transform: scaleX(1);
   }
 }
+
 .bar .progress-line span{
   height: 100%;
   position: absolute;
@@ -404,9 +406,7 @@ H1 {
   background: #4A55A2;
   animation: animate 1s 1s cubic-bezier(1,0,0.5,1) forwards;
 }
-/* .bar .progress-line.html span{
-  width: 90%;
-} */
+
 .progress-line span::after{
   position: absolute;
   top: -28px;
@@ -419,14 +419,13 @@ H1 {
   opacity: 0;
   animation: showText2 0.5s 1.5s linear forwards;
 }
+
 @keyframes showText2 {
   100%{
     opacity: 1;
   }
 }
-/* .progress-line.html span::after{
-  content: "90%";
-} */
+
 
 .bar .progress-line.html span::before {
   content: attr(data-percentage); /* Use a data attribute to set the text */
@@ -443,3 +442,6 @@ H1 {
   overflow: hidden; /* To keep the text within the bar */
   white-space: nowrap; /* Keep the text on one line */
 }
+
+
+

@@ -245,3 +245,7 @@ function updateUserProgress(QuizToUpdate, lanagauge){
 //         }
 //     })
 // }
+
+
+
+
