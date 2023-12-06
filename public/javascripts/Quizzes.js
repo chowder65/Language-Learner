@@ -20,7 +20,7 @@ document.getElementById('# pass in modal button id to submit quiz').addEventList
     event.preventDefault();
 
     //check the quiz answers
-    checkAnswers("quizAnimals", "spanish")//set to be the quiz progress identitfier for updating(IE: quizAnimals : false languageCompletion : spanishLanguageCompletion)
+    checkAnswers("Animals", "spanish")//set to be the quiz progress identitfier for updating(IE: Animals : false languageCompletion : spanishLanguageCompletion)
 })
 
 function getSession(){

@@ -47,8 +47,15 @@ let userController = {
             userPassword: dataEncryptionController.encrypt(req.body.userPassword),
             userCompletedLanguages: req.body.userCompletedLanguages,
             spanishProgress : {
-                languageCompletion : 0,
-                lessonAnimals : false,
+                spanishLanguageCompletion : 0,
+                lessonAnimals : {
+                    lessonAnimalsProgress : 0,
+                    simpleAnimalLesson: false,
+                    easyAnimalLesson:false,
+                    mediumAnimalLesson: false,
+                    hardAnimalLesson: false,
+                    extremeAnimalLesson: false
+                },
                 quizAnimals : false,
             },
         };
@@ -70,7 +77,7 @@ let userController = {
             $set: {
                 userCompletedLanguages: req.body.userCompletedLanguages,
                 spanishProgress : {
-                    languageCompletion : req.body.spanishLanguageCompletion,
+                    spanishLanguageCompletion : req.body.spanishLanguageCompletion,
                     lessonAnimals : req.body.lessonAnimals,
                     quizAnimals : req.body.quizAnimals,
                 }
