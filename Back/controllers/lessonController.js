@@ -17,9 +17,14 @@ let lessonController = {
         let db = client.db('LingoLounge');
         let collection = db.collection('Lessons');
 
-        const query = req.body.lessonTopic;
-        const lesson = await collection.findOne({ lessonTopic: query });
-        res.send(lesson);
+        const query = req.body.lessonId;
+        const lesson = await collection.findOne({ lessonId: query });
+        if(lesson){
+            console.log(lesson);
+            return res.status(200).json({lesson: lesson});
+        }else{
+            return res.status(404).json({message: "Lesson not found"});
+        }
     },
     addLesson: async(req, res, next) => {
         await client.connect();
