@@ -1,5 +1,3 @@
-
-
 let mediaRecorder;
 let audioChunks = [];
 
@@ -44,6 +42,7 @@ async function saveRecordingToServer(audioBlob) {
 
     await new Promise((resolve) => {
         formData.append('audio', audioBlob);
+        formData.append('id', 1);
         resolve();
     });
     console.log(formData);
@@ -62,5 +61,24 @@ async function saveRecordingToServer(audioBlob) {
 .catch((error) => {
     console.error('Error:', error);
 });
+
+    fetch('http://127.0.0.1:8000/convertBinarytoMp3?fileId=1', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => {
+        if (response.ok) {
+            console.log('Success:', response.statusText);
+            console.log(response);
+        } else {
+            console.error('Error:', response.statusText);
+        }
+    }
+    ).catch((error) => {
+        console.error('Error:', error);
+    });
 }
+
+
 

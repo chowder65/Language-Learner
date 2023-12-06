@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cons = require('consolidate');
 var session = require('express-session')
+const cors = require('cors');
 
 var indexRouter = require('./Back/routes/index');
 var usersRouter = require('./Back/routes/users');
@@ -13,6 +14,7 @@ var lessonRouter = require('./Back/routes/lesson');
 var quizRouter = require('./Back/routes/quiz');
 var questionRouter = require('./Back/routes/questions');
 var audioRouter = require('./Back/routes/audio');
+var logoutRouter = require('./Back/routes/logout')
 
 var app = express();
 
@@ -25,6 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 app.use(session({
   secret: 'UserLoginSession', //can be anything, needs to be secure and realted to project
   resave: false,
@@ -39,6 +42,7 @@ app.use('/quiz', quizRouter);
 app.use('/questions', questionRouter);
 app.use('/audio', audioRouter);
 app.use('/test', require('./Back/routes/test'));
+app.use('/logout', logoutRouter)
 
 
 // catch 404 and forward to error handler

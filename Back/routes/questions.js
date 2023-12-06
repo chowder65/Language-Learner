@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/getQuestion', questionsController.getQuestion);
+router.post('/getQuestion', questionsController.getQuestion);
 router.post('/addQuestion', questionsController.addQuestion);
 router.patch('/updateQuestion', questionsController.updateQuestion);
 router.delete('/deleteQuestion', questionsController.deleteQuestion);

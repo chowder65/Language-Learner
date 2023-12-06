@@ -19,15 +19,9 @@ const audioFunctions = {
             let db = client.db('LingoLounge');
             let collection = db.collection('AudioFiles');
         
-            // const audioData = fs.readFileSync(req.body.audioFile);
-        
-            // const query = { _id: 1,
-            //                 audio: audioData
-            // };
-        
             console.log(req.file)
 
-            await collection.insertOne({ audio: req.file.buffer });  
+            await collection.insertOne({ audio: req.file.buffer, id: req.body.id });  
             res.send("Audio File Stored");
         }catch(err){
             console.log(err)
