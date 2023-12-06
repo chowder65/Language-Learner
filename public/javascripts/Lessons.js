@@ -338,7 +338,7 @@ function checkExtremeAnswers(lessonToCheck, langauage){//
         //changes the users progress for this lesson to true
         updateUserProgress(lessonToCheck, langauage)
     }else{
-        console.log("User Failed the lesson beacuse they answered less than 3/5 questions correctly")
+        console.log("User Failed the lesson beacuse they answered less than 3/5 questions correctly. Resetting progress")
         //do nothing to change the progress
     }
 }
