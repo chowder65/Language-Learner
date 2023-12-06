@@ -379,7 +379,7 @@ H1 {
   }
 }
 .skill-bars .bar .progress-line{
-  height: 10px;
+  height: 30px;
   width: 100%;
   background: #f0f0f0;
   position: center;
@@ -404,9 +404,9 @@ H1 {
   background: #4A55A2;
   animation: animate 1s 1s cubic-bezier(1,0,0.5,1) forwards;
 }
-.bar .progress-line.html span{
+/* .bar .progress-line.html span{
   width: 90%;
-}
+} */
 .progress-line span::after{
   position: absolute;
   top: -28px;
@@ -424,6 +424,22 @@ H1 {
     opacity: 1;
   }
 }
-.progress-line.html span::after{
+/* .progress-line.html span::after{
   content: "90%";
+} */
+
+.bar .progress-line.html span::before {
+  content: attr(data-percentage); /* Use a data attribute to set the text */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the text */
+  color: white; /* Text color */
+}
+
+.bar .progress-line.html span{
+  /* existing styles */
+  position: relative; /* If not already set, for the positioning of the text */
+  overflow: hidden; /* To keep the text within the bar */
+  white-space: nowrap; /* Keep the text on one line */
 }
