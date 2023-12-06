@@ -1,6 +1,6 @@
 // fetch lesson or quiz 
-async function fetchDetails(id, isLesson = true) {
-    const url = `http://localhost:3000/${isLesson ? 'lessons' : 'quizzes'}/${id}`;
+async function fetchDetails(id, getLesson = true) {
+    const url = `http://localhost:3000/${getLesson ? 'lessons' : 'quizzes'}/${id}`;
     try {
         const response = await fetch(url);
         const data = await response.json();
@@ -12,7 +12,7 @@ async function fetchDetails(id, isLesson = true) {
 }
 
 // create and show the modal
-function createAndShowModal(id, details, isLesson = true) {
+function createAndShowModal(id, details, getLesson = true) {
     const modal = document.createElement('div');
     modal.className = 'modal lesson-quiz-modal fade show';
     modal.id = `modal-${id}`;
@@ -35,7 +35,7 @@ function createAndShowModal(id, details, isLesson = true) {
     `;
     document.body.appendChild(modal);
 
-    if (isLesson && details.groups) {
+    if (getLesson && details.groups) {
         const tabsContainer = modal.querySelector('.modal-body');
         tabsContainer.innerHTML = '';
         details.groups.forEach((group, index) => {
