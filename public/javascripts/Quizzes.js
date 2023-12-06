@@ -25,7 +25,7 @@ document.getElementById('# pass in modal button id to submit quiz').addEventList
 
 function getSession(){
 
-    let URL = "localhost:3000/login"
+    let URL = "http://localhost:3000/login"
 
     fetch(URL, {
         method: "GET",
@@ -38,6 +38,30 @@ function getSession(){
             return res.json
         }else{
             console.log("error getting user session")
+        }
+    })
+}
+
+function getUser(userEmail){
+
+    let User = {
+        userEmail : userEmail
+    }
+
+    let URL = "http://localhost:3000/users/getUser"
+
+    fetch(URL, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify(User)
+    })
+    .then(res => {
+        if(res.ok){
+            return res.json()
+        }else{
+            console.log("problem getting user in quizzes.js")
         }
     })
 }
@@ -101,6 +125,8 @@ function checkAnswers(quizToCheck, langauage){
     }else{
         console.log("User Failed the quiz beacuse the scored less then 70%")
         //do nothing to change the progress
+
+        //reset the coresponding lesson **STRETCH GOAL
     }
 }
 
@@ -108,16 +134,14 @@ function updateUserProgress(QuizToUpdate, lanagauge){
 
     let langaugeProgressToUpdate = lanagauge + "LanguageCompletion"
 
-    //get the Email to query the user and update their progress
-    //get the users current LanguageCompletion
-
-    //NOT DONE YET NEEDS TO BE REVISTED
-    //#
-    //#
-
-    User = {
-        userEmail: userEmail, //get userEmail from session
-        [langaugeProgressToUpdate] : LanguageCompletion + 5 , //get laguagCompletion from session
+    //get user email from the session
+    let session = getSession()
+    //look for a user based off the email found
+    let user = getUser(session.userEmail)
+    //create a body to update the user
+    let User = {
+        userEmail: user.userEmail, //get userEmail from session
+        [langaugeProgressToUpdate] : user.langaugeProgressToUpdate + 5 , //get laguagCompletion from session
         [QuizToUpdate] : true,
     }
 

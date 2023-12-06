@@ -1,4 +1,4 @@
-document.getElementById('logoutButton').addEventListener('click', function(event) {
+document.getElementById('logoutBtnModal').addEventListener('click', function(event) {
     event.preventDefault();
     console.log("logout button clicked")
     logoutUser();
