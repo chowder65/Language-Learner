@@ -16,7 +16,7 @@
 
 
 //modal button
-document.getElementById('# pass in modal button id to submit quiz').addEventListener('click', function(event) {
+document.getElementById('submitBtnQuiz').addEventListener('click', function(event) {
     event.preventDefault();
 
     //check the quiz answers
@@ -73,16 +73,16 @@ function checkAnswers(quizToCheck, langauage){
 
     var score = 0;
 
-    var question1Checked = document.getElementById('').checked
-    var question2Checked = document.getElementById('').checked
-    var question3Checked = document.getElementById('').checked
-    var question4Checked = document.getElementById('').checked
-    var question5Checked = document.getElementById('').checked
-    var question6Checked = document.getElementById('').checked
-    var question7Checked = document.getElementById('').checked
-    var question8Checked = document.getElementById('').checked
-    var question9Checked = document.getElementById('').checked
-    var question10Checked = document.getElementById('').checked
+    var question1Checked = document.getElementById('answer-true1').checked
+    var question2Checked = document.getElementById('answer-true2').checked
+    var question3Checked = document.getElementById('answer-true3').checked
+    var question4Checked = document.getElementById('answer-true4').checked
+    var question5Checked = document.getElementById('answer-true5').checked
+    var question6Checked = document.getElementById('answer-true6').checked
+    var question7Checked = document.getElementById('answer-true7').checked
+    var question8Checked = document.getElementById('answer-true8').checked
+    var question9Checked = document.getElementById('answer-true9').checked
+    var question10Checked = document.getElementById('answer-true10').checked
 
    
     if(question1Checked){
