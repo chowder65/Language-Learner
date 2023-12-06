@@ -15,13 +15,27 @@
 // })
 
 
-//modal button
-document.getElementById('submitBtnQuiz').addEventListener('click', function(event) {
-    event.preventDefault();
-    console.log("into submit quiz btn")
-    //check the quiz answers
-    checkAnswers("Animals", "spanish")//set to be the quiz progress identitfier for updating(IE: Animals : false languageCompletion : spanishLanguageCompletion)
-})
+//modal
+const lessonCardOne = document.getElementById('lessonCardOne');
+if (lessonCardOne) {
+    lessonCardOne.addEventListener('click', function(event) {
+        const submitBtnQuiz = document.getElementById('submitBtnQuiz');
+        if (submitBtnQuiz) {
+            submitBtnQuiz.addEventListener('click', function(event) {
+                event.preventDefault();
+                console.log("Into submit quiz btn");
+                // Check the quiz answers
+                checkAnswers("Animals", "spanish");
+            });
+        } else {
+            console.error("submitBtnQuiz element not found");
+        }
+    });
+} else {
+    console.error("lessonCardOne element not found");
+}
+
+
 
 function getSession(){
 
@@ -51,7 +65,7 @@ function getUser(userEmail){
     let URL = "http://localhost:3000/users/getUser"
 
     fetch(URL, {
-        method: "GET",
+        method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
