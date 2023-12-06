@@ -49,39 +49,40 @@ async function fetchQuizDetails(quizId) {
 }
 
 // create and show lesson modal
-function createAndShowLessonModal(id, details, data) {
+function createAndShowLessonModal(lessonDetails) {
     const modal = document.createElement('div');
     modal.className = 'modal lesson-quiz-modal fade show';
-    modal.id = `modal-${id}`;
+    modal.id = `modal-${lessonDetails.lessonId}`;
     modal.setAttribute('tabindex', '-1');
-    modal.setAttribute('aria-labelledby', `${id}Label`);
+    modal.setAttribute('aria-labelledby', `${lessonDetails.lessonId}Label`);
     modal.setAttribute('aria-hidden', 'true');
     modal.innerHTML = `
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">${details.title}</h5>
+                    <h5 class="modal-title">${lessonDetails.lessonTopic} - ${lessonDetails.lessonLanguage}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ${details.description}
+                    <!-- Tabs content will be added here -->
                 </div>
                 <div class="modal-footer">
-                    <!-- Footer content if needed -->
+                    <button type="button" class="btn btn-primary">Submit</button>
                 </div>
             </div>
         </div>
     `;
+
     document.body.appendChild(modal);
 
-    if (getLesson && details.groups) {
-        const tabsContainer = modal.querySelector('.modal-body');
-        tabsContainer.innerHTML = '';
-        details.groups.forEach((group, index) => {
-            const tab = createTabElement(group, index);
-            tabsContainer.appendChild(tab);
-        });
-    }
+    const tabsContainer = modal.querySelector('.modal-body');
+    tabsContainer.innerHTML = '';
+
+    ['simpleQuestions', 'easyQuestions', 'mediumQuestions', 'hardQuestions', 'extremeQuestions'].forEach(difficulty => {
+        const questions = lessonDetails[difficulty];
+        const tab = createTabElement(questions, difficulty);
+        tabsContainer.appendChild(tab);
+    });
 
     const bootstrapModal = new bootstrap.Modal(modal);
     bootstrapModal.show();
@@ -90,6 +91,7 @@ function createAndShowLessonModal(id, details, data) {
         modal.remove();
     });
 }
+
 
 // create and show quiz modal
 function createAndShowQuizModal(id, details, datwo) {
@@ -135,21 +137,21 @@ function createAndShowQuizModal(id, details, datwo) {
 }
 
 // create a tab element for a group of questions
-function createTabElement(group, index) {
+function createTabElement(questions, difficulty) {
     const tab = document.createElement('div');
     tab.className = 'lesson-group-tab';
-    tab.id = `group-tab-${index}`;
+    tab.id = `tab-${difficulty}`;
 
     const title = document.createElement('h4');
-    title.innerText = group.title;
+    title.innerText = `Difficulty: ${difficulty}`;
     tab.appendChild(title);
 
     const questionsContainer = document.createElement('div');
     questionsContainer.className = 'questions-container';
 
-    group.questions.forEach((question, qIndex) => {
-        const questionElem = document.createElement('p');
-        questionElem.innerText = `${qIndex + 1}. ${question}`;
+    questions.forEach(questionId => {
+        const questionDetails = getQuestion(questionId); 
+        const questionElem = createQuestionElement(questionDetails);
         questionsContainer.appendChild(questionElem);
     });
 
@@ -157,6 +159,7 @@ function createTabElement(group, index) {
 
     return tab;
 }
+
 
 // event listener for lesson and quiz card 
 document.querySelectorAll('.card-item').forEach(card => {
@@ -353,14 +356,6 @@ document.querySelectorAll('.card-item').forEach(card => {
         }
     });
 });
-
-
-
-
-
-
-
-
 
 //alyssa
 
