@@ -17,7 +17,7 @@ let lessonController = {
         let db = client.db('LingoLounge');
         let collection = db.collection('Lessons');
 
-        const query = req.body.quizTopic;
+        const query = req.body.lessonTopic;
         const lesson = await collection.findOne({ lessonTopic: query });
         res.send(lesson);
     },
@@ -28,8 +28,8 @@ let lessonController = {
         let collection = db.collection('Lessons');
 
         const query = {
-            lessonId: req.body.quizId,
-            lessonTopic: req.body.quizTopic,
+            lessonId: req.body.lessonId,
+            lessonTopic: req.body.lessonTopic,
             lessonLanguage: req.body.lessonLanguage,
             simpleQuestions : req.body.simpleQuestionsAry,
             easyQuestions : req.body.easyQuestionsAry,
@@ -49,8 +49,8 @@ let lessonController = {
         let collection = db.collection('Lessons');
 
         const query = {
-            lessonId: req.body.quizId,
-            lessonTopic: req.body.quizTopic,
+            lessonId: req.body.lessonId,
+            lessonTopic: req.body.lessonTopic,
             lessonLanguage: req.body.lessonLanguage,
             simpleQuestions : req.body.simpleQuestionsAry,
             easyQuestions : req.body.easyQuestionsAry,
