@@ -1,18 +1,18 @@
-//card
-document.getElementById('# pass in a card id').addEventListener('click', function(event) {
-    event.preventDefault();
-    console.log("A card has been clicked")
+// //card
+// document.getElementById('# pass in a card id').addEventListener('click', function(event) {
+//     event.preventDefault();
+//     console.log("A card has been clicked")
 
 
-    //get the user session data and check to see if the quiz they clicked has the lesson accosiated complted
+//     //get the user session data and check to see if the quiz they clicked has the lesson accosiated complted
 
-    if(data){
-        //fetch the quiz and show the returned data on the page
-        showQuizOnPage("quizAnimals")//pass in a quizTopic
-    }else{
-        //if not completed dont show anything
-    }    
-})
+//     if(data){
+//         //fetch the quiz and show the returned data on the page
+//         showQuizOnPage("quizAnimals")//pass in a quizTopic
+//     }else{
+//         //if not completed dont show anything
+//     }    
+// })
 
 
 //modal button
@@ -140,68 +140,68 @@ function updateUserProgress(QuizToUpdate, lanagauge){
 }
 
 
-function showQuizOnPage(quizTopic){
+// function showQuizOnPage(quizTopic){
 
-    data = {
-        "quizTopic" : quizTopic,
-    }
+//     data = {
+//         "quizTopic" : quizTopic,
+//     }
 
-    //fetch the api and create the user
-    let URL = "http://localhost:3000/quiz/getQuiz"
+//     //fetch the api and create the user
+//     let URL = "http://localhost:3000/quiz/getQuiz"
 
-    fetch(URL, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-        })
-        .then(res => {
-            if(res.status == 200){
-                console.log("Quiz Found")
-                return res.json();    
-            }else{
-                console.log("Something wrong with findinf quiz Fetch")
-            }
-        })
-        .then(data => {
+//     fetch(URL, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(data)
+//         })
+//         .then(res => {
+//             if(res.status == 200){
+//                 console.log("Quiz Found")
+//                 return res.json();    
+//             }else{
+//                 console.log("Something wrong with findinf quiz Fetch")
+//             }
+//         })
+//         .then(data => {
 
-            //get the array of questions ids
-            const questionIds = data.questionIds
+//             //get the array of questions ids
+//             const questionIds = data.questionIds
 
-            questionIds.array.forEach(id => {
-                //call the get question method
-                let question = getQuestion(id)
+//             questionIds.array.forEach(id => {
+//                 //call the get question method
+//                 let question = getQuestion(id)
                 
-                //show the information on the page based on what the question returns
+//                 //show the information on the page based on what the question returns
 
-                //get all the modals ids
+//                 //get all the modals ids
 
 
 
-            });
-        })
-        .catch(error => console.error('Error:', error))
+//             });
+//         })
+//         .catch(error => console.error('Error:', error))
 
-};
+// };
 
-function getQuestion(questionId){
+// function getQuestion(questionId){
 
-    let URL = "http://localhost:3000/questions/getQuestion/questionId=" + questionId
+//     let URL = "http://localhost:3000/questions/getQuestion/questionId=" + questionId
 
-    fetch(URL, {
-        method: "GET",
-        headers: {
-            'Content-Type' : 'application/json'
-        }
-    })
-    .then(res => {
+//     fetch(URL, {
+//         method: "GET",
+//         headers: {
+//             'Content-Type' : 'application/json'
+//         }
+//     })
+//     .then(res => {
 
-        if(res.status == 200){
-            //return the question found
-            return res.json();
-        }else{
-            console.log("Something wrong with finding the question Fetch")
-        }
-    })
-}
+//         if(res.status == 200){
+//             //return the question found
+//             return res.json();
+//         }else{
+//             console.log("Something wrong with finding the question Fetch")
+//         }
+//     })
+// }
