@@ -9,13 +9,13 @@
 }
 /* Pre css */
 .flex {
-  display: flex;
+  display: 15px;
   align-items: center;
 }
 .nav_image {
   display: flex;
   min-width: 55px;
-  justify-content: center;
+  justify-content: left;
 }
 .nav_image img {
   height: 35px;
