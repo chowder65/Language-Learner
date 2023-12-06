@@ -18,7 +18,7 @@
 //modal button
 document.getElementById('submitBtnQuiz').addEventListener('click', function(event) {
     event.preventDefault();
-
+    console.log("into submit quiz btn")
     //check the quiz answers
     checkAnswers("Animals", "spanish")//set to be the quiz progress identitfier for updating(IE: Animals : false languageCompletion : spanishLanguageCompletion)
 })
