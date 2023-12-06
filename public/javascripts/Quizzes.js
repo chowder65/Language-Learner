@@ -139,6 +139,8 @@ function updateUserProgress(QuizToUpdate, lanagauge){
     //look for a user based off the email found
     let user = getUser(session.userEmail)
     //create a body to update the user
+
+    //naming might need to be fixed user.spanishProgress.X
     let User = {
         userEmail: user.userEmail, //get userEmail from session
         [langaugeProgressToUpdate] : user.langaugeProgressToUpdate + 5 , //get laguagCompletion from session
