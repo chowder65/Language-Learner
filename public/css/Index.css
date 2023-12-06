@@ -390,18 +390,7 @@ H1 {
               0 1px rgba(255,255,255,0.8);
   animation: animate 1s cubic-bezier(1,0,0.5,1) forwards;
 }
-.skill-bars .bar .quiz-progress-line{
-  height: 30px;
-  width: 100%;
-  background: #f0f0f0;
-  position: center;
-  transform: scaleX(0);
-  transform-origin: left;
-  border-radius: 10px;
-  box-shadow: inset 0 1px 1px rgba(0,0,0,0.05),
-              0 1px rgba(255,255,255,0.8);
-  animation: animate 1s cubic-bezier(1,0,0.5,1) forwards;
-}
+
 @keyframes animate {
   100%{
     transform: scaleX(1);
@@ -417,15 +406,7 @@ H1 {
   background: #4A55A2;
   animation: animate 1s 1s cubic-bezier(1,0,0.5,1) forwards;
 }
-.bar .quiz-progress-line span{
-  height: 100%;
-  position: absolute;
-  border-radius: 10px;
-  transform: scaleX(0);
-  transform-origin: left;
-  background: #4A55A2;
-  animation: animate 1s 1s cubic-bezier(1,0,0.5,1) forwards;
-}
+
 .progress-line span::after{
   position: absolute;
   top: -28px;
@@ -438,18 +419,7 @@ H1 {
   opacity: 0;
   animation: showText2 0.5s 1.5s linear forwards;
 }
-.quiz-progress-line span::after{
-  position: absolute;
-  top: -28px;
-  right: 0;
-  font-weight: 500;
-  background: #000;
-  color: #fff;
-  padding: 1px 8px;
-  border-radius: 3px;
-  opacity: 0;
-  animation: showText2 0.5s 1.5s linear forwards;
-}
+
 @keyframes showText2 {
   100%{
     opacity: 1;
@@ -465,14 +435,7 @@ H1 {
   transform: translate(-50%, -50%); /* Center the text */
   color: white; /* Text color */
 }
-.bar .quiz-progress-line.html span::before {
-  content: attr(data-percentage); /* Use a data attribute to set the text */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* Center the text */
-  color: white; /* Text color */
-}
+
 .bar .progress-line.html span{
   /* existing styles */
   position: relative; /* If not already set, for the positioning of the text */
@@ -481,10 +444,4 @@ H1 {
 }
 
 
-.bar .quiz-progress-line.html span{
-  /* existing styles */
-  position: relative; /* If not already set, for the positioning of the text */
-  overflow: hidden; /* To keep the text within the bar */
-  white-space: nowrap; /* Keep the text on one line */
-}
 
