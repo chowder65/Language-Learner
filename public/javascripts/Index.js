@@ -48,8 +48,51 @@ async function fetchQuizDetails(quizId) {
     })
 }
 
-// create and show the modal
-function createAndShowModal(id, details, data) {
+// create and show lesson modal
+function createAndShowLessonModal(id, details, data) {
+    const modal = document.createElement('div');
+    modal.className = 'modal lesson-quiz-modal fade show';
+    modal.id = `modal-${id}`;
+    modal.setAttribute('tabindex', '-1');
+    modal.setAttribute('aria-labelledby', `${id}Label`);
+    modal.setAttribute('aria-hidden', 'true');
+    modal.innerHTML = `
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">${details.title}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ${details.description}
+                </div>
+                <div class="modal-footer">
+                    <!-- Footer content if needed -->
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    if (getLesson && details.groups) {
+        const tabsContainer = modal.querySelector('.modal-body');
+        tabsContainer.innerHTML = '';
+        details.groups.forEach((group, index) => {
+            const tab = createTabElement(group, index);
+            tabsContainer.appendChild(tab);
+        });
+    }
+
+    const bootstrapModal = new bootstrap.Modal(modal);
+    bootstrapModal.show();
+
+    modal.addEventListener('hidden.bs.modal', function () {
+        modal.remove();
+    });
+}
+
+// create and show quiz modal
+function createAndShowQuizModal(id, details, datwo) {
     const modal = document.createElement('div');
     modal.className = 'modal lesson-quiz-modal fade show';
     modal.id = `modal-${id}`;
@@ -233,7 +276,7 @@ document.querySelectorAll('.card-item').forEach(card => {
             })
 
             if (lessonDetails) {
-                createAndShowModal(lessonId, lessonDetails, data);//lesson1, jsonData, true
+                createAndShowLessonModal(lessonId, lessonDetails, data);//lesson1, jsonData, true
             }
         }else if (quizId) {
             const quizDetails = await fetchQuizDetails(quizId);
@@ -305,7 +348,7 @@ document.querySelectorAll('.card-item').forEach(card => {
             })
 
             if (quizDetails) {
-                createAndShowModal(quizId, quizDetails, datwo);//quiz1, jsonData, false
+                createAndShowQuizModal(quizId, quizDetails, datwo);//quiz1, jsonData, false
             }
         }
     });
