@@ -49,7 +49,7 @@ async function fetchQuizDetails(quizId) {
 }
 
 // create and show lesson modal
-function createAndShowLessonModal(lessonDetails) {
+async function createAndShowLessonModal(lessonDetails) {
     const modal = document.createElement('div');
     modal.className = 'modal lesson-quiz-modal fade show';
     modal.id = `modal-${lessonDetails.lessonId}`;
@@ -60,11 +60,11 @@ function createAndShowLessonModal(lessonDetails) {
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">${lessonDetails.lessonTopic} - ${lessonDetails.lessonLanguage}</h5>
+                    <h5 class="modal-title">${lessonDetails.lessonTopic}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Tabs content will be added here -->
+                    <!-- where lesson questions will show -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">Submit</button>
@@ -73,59 +73,22 @@ function createAndShowLessonModal(lessonDetails) {
         </div>
     `;
 
-    document.body.appendChild(modal);
-
     const tabsContainer = modal.querySelector('.modal-body');
     tabsContainer.innerHTML = '';
 
-    ['simpleQuestions', 'easyQuestions', 'mediumQuestions', 'hardQuestions', 'extremeQuestions'].forEach(difficulty => {
-        const questions = lessonDetails[difficulty];
-        const tab = createTabElement(questions, difficulty);
-        tabsContainer.appendChild(tab);
-    });
+    const difficultyLevels = ['simpleQuestions', 'easyQuestions', 'mediumQuestions', 'hardQuestions', 'extremeQuestions'];
 
-    const bootstrapModal = new bootstrap.Modal(modal);
-    bootstrapModal.show();
+    for (const level of difficultyLevels) {
+        if (lessonDetails[level]) {
+            const tabContent = [];
+            for (const questionId of lessonDetails[level]) {
+                const questionDetails = getQuestion(questionId);
+                tabContent.push(createLessonQuestionElement(questionDetails));
+            }
 
-    modal.addEventListener('hidden.bs.modal', function () {
-        modal.remove();
-    });
-}
-
-
-// create and show quiz modal
-function createAndShowQuizModal(id, details, datwo) {
-    const modal = document.createElement('div');
-    modal.className = 'modal lesson-quiz-modal fade show';
-    modal.id = `modal-${id}`;
-    modal.setAttribute('tabindex', '-1');
-    modal.setAttribute('aria-labelledby', `${id}Label`);
-    modal.setAttribute('aria-hidden', 'true');
-    modal.innerHTML = `
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">${details.title}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ${details.description}
-                </div>
-                <div class="modal-footer">
-                    <!-- Footer content if needed -->
-                </div>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(modal);
-
-    if (getLesson && details.groups) {
-        const tabsContainer = modal.querySelector('.modal-body');
-        tabsContainer.innerHTML = '';
-        details.groups.forEach((group, index) => {
-            const tab = createTabElement(group, index);
+            const tab = createTabElement(level, tabContent);
             tabsContainer.appendChild(tab);
-        });
+        }
     }
 
     const bootstrapModal = new bootstrap.Modal(modal);
@@ -137,21 +100,18 @@ function createAndShowQuizModal(id, details, datwo) {
 }
 
 // create a tab element for a group of questions
-function createTabElement(questions, difficulty) {
+function createTabElement(difficultyLevel, tabContent) {
     const tab = document.createElement('div');
     tab.className = 'lesson-group-tab';
-    tab.id = `tab-${difficulty}`;
+    tab.id = `tab-${difficultyLevel}`;
 
     const title = document.createElement('h4');
-    title.innerText = `Difficulty: ${difficulty}`;
+    title.innerText = `Difficulty: ${difficultyLevel}`;
     tab.appendChild(title);
 
     const questionsContainer = document.createElement('div');
     questionsContainer.className = 'questions-container';
-
-    questions.forEach(questionId => {
-        const questionDetails = getQuestion(questionId); 
-        const questionElem = createQuestionElement(questionDetails);
+    tabContent.forEach(questionElem => {
         questionsContainer.appendChild(questionElem);
     });
 
@@ -160,6 +120,137 @@ function createTabElement(questions, difficulty) {
     return tab;
 }
 
+// question container for lesson
+function createLessonQuestionElement(questionDetails) {
+    const questionContainer = document.createElement('div');
+    questionContainer.className = 'lesson-question';
+
+    const questionText = document.createElement('p');
+    questionText.innerText = questionDetails.question;
+    questionContainer.appendChild(questionText);
+
+    const answers = [
+        { answerText: questionDetails.correctAnswer, isCorrect: true },
+        { answerText: questionDetails.wrongAnswerOne, isCorrect: false },
+        { answerText: questionDetails.wrongAnswerTwo, isCorrect: false },
+        { answerText: questionDetails.wrongAnswerThree, isCorrect: false },
+    ];
+    shuffleArray(answers);
+
+    answers.forEach((answer, index) => {
+        const answerContainer = document.createElement('div');
+        answerContainer.className = 'lesson-answer';
+
+        const radioInput = document.createElement('input');
+        radioInput.type = 'radio';
+        radioInput.name = `answer-${questionDetails.questionId}`;
+        radioInput.value = answer.isCorrect;
+        radioInput.id = `answer-${questionDetails.questionId}-${index}`;
+
+        const label = document.createElement('label');
+        label.htmlFor = `answer-${questionDetails.questionId}-${index}`;
+        label.innerText = answer.answerText;
+
+        answerContainer.appendChild(radioInput);
+        answerContainer.appendChild(label);
+        questionContainer.appendChild(answerContainer);
+    });
+
+    return questionContainer;
+}
+
+// create and show quiz modal
+async function createAndShowQuizModal(quizDetails) {
+    const modal = document.createElement('div');
+    modal.className = 'modal lesson-quiz-modal fade show';
+    modal.id = `modal-${quizDetails.quizId}`;
+    modal.setAttribute('tabindex', '-1');
+    modal.setAttribute('aria-labelledby', `${quizDetails.quizId}Label`);
+    modal.setAttribute('aria-hidden', 'true');
+    modal.innerHTML = `
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">${quizDetails.quizTopic}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- where quiz questions will show  -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    const questionsContainer = modal.querySelector('.modal-body');
+
+    shuffleArray(quizDetails.questionIds);
+
+    // add questions/answers to modal
+    for (const questionId of quizDetails.questionIds) {
+        const questionDetails = getQuestion(questionId);
+        const questionContainer = createQuizQuestionElement(questionDetails); 
+        questionsContainer.appendChild(questionContainer); 
+    }
+
+    const bootstrapModal = new bootstrap.Modal(modal);
+    bootstrapModal.show();
+
+    modal.addEventListener('hidden.bs.modal', function () {
+        modal.remove();
+    });
+}
+
+// question container for quiz
+function createQuizQuestionElement(questionDetails) {
+    const questionContainer = document.createElement('div');
+    questionContainer.className = 'quiz-question';
+
+    const questionText = document.createElement('p');
+    questionText.innerText = questionDetails.question;
+    questionContainer.appendChild(questionText);
+
+    const answers = [
+        { answerText: questionDetails.correctAnswer, isCorrect: true },
+        { answerText: questionDetails.wrongAnswerOne, isCorrect: false },
+        { answerText: questionDetails.wrongAnswerTwo, isCorrect: false },
+        { answerText: questionDetails.wrongAnswerThree, isCorrect: false },
+    ];
+    shuffleArray(answers);
+
+    answers.forEach((answer, index) => {
+        const answerContainer = document.createElement('div');
+        answerContainer.className = 'quiz-answer';
+
+        const radioInput = document.createElement('input');
+        radioInput.type = 'radio';
+        radioInput.name = `answer-${questionDetails.questionId}`;
+        radioInput.value = answer.isCorrect;
+        radioInput.id = `answer-${questionDetails.questionId}-${index}`;
+
+        const label = document.createElement('label');
+        label.htmlFor = `answer-${questionDetails.questionId}-${index}`;
+        label.innerText = answer.answerText;
+
+        answerContainer.appendChild(radioInput);
+        answerContainer.appendChild(label);
+        questionContainer.appendChild(answerContainer);
+    });
+
+    return questionContainer;
+}
+
+// makes questions appear in random order
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; 
+    }
+}
 
 // event listener for lesson and quiz card 
 document.querySelectorAll('.card-item').forEach(card => {

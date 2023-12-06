@@ -24,10 +24,7 @@ router.post('/',  async function(req, res) {
       //if the data is good then create a session and log them in!!
       var session;
       session = req.session
-      session.user = {
-        userEmail : getUser.userEmail,
-        spanishLanguageCompletion : getUser.spanishLanguageCompletion
-      }
+      session.user = user
       console.log("session" + req.session.user)
 
       res.status(200).send(session)
