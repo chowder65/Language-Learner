@@ -71,25 +71,6 @@ function getUser(userEmail) {
         throw error;
     });
 }
-
-
-
-function fetchUserProgress(email) {
-    getUser(email)
-      .then(userData => {
-        // Assuming userData contains the field spanishLanguageCompletion
-        const progressPercent = userData.spanishProgress.spanishLanguageCompletion;
-        const progressBar = document.querySelector('.progress-line.html span');
-        progressBar.style.width = progressPercent + '%';
-        progressBar.textContent = progressPercent + '%';
-      })
-      .catch(error => {
-        console.error('Failed to fetch user progress:', error);
-      });
-  }
-  
-//   // Example usage, replace 'user@example.com' with the actual user's email
-//   fetchUserProgress('user@example.com');
   
 
 function getSession(){
@@ -149,7 +130,7 @@ function updateSpanishProgress(userEmail) {
     getUser(userEmail)
     .then(userData => {
         // Extract the Spanish language completion value
-        let spanishCompletion = userData.spanishProgress.spanishLanguageCompletion;
+        let spanishCompletion = userData.spanishProgress.lessonAnimals.lessonAnimalsProgress;
 
         // Find the progress bar element
         let progressBar = document.querySelector('.progress-line.html span');
@@ -183,12 +164,7 @@ function fetchAndDisplayUserProgress() {
 }
 
 // Call this function when the page loads
-document.addEventListener('DOMContentLoaded', fetchAndDisplayUserProgress());
-
-
-
-
-  
+document.addEventListener('DOMContentLoaded', fetchAndDisplayUserProgress());  
 
 
 
