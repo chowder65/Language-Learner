@@ -1,24 +1,8 @@
-// //card
-// document.getElementById('# pass in a card id').addEventListener('click', function(event) {
-//     event.preventDefault();
-//     console.log("A card has been clicked")
-
-
-//     //get the user session data and check to see if the quiz they clicked has the lesson accosiated complted
-
-//     if(data){
-//         //fetch the quiz and show the returned data on the page
-//         showQuizOnPage("quizAnimals")//pass in a quizTopic
-//     }else{
-//         //if not completed dont show anything
-//     }    
-// })
-
 
 //modal
-const lessonCardOne = document.getElementById('lessonCardOne');
-if (lessonCardOne) {
-    lessonCardOne.addEventListener('click', function(event) {
+const quizCardOne = document.getElementById('quizCardOne');
+if (quizCardOne) {
+    quizCardOne.addEventListener('click', function(event) {
         const submitBtnQuiz = document.getElementById('submitBtnQuiz');
         if (submitBtnQuiz) {
             submitBtnQuiz.addEventListener('click', function(event) {

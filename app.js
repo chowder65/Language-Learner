@@ -15,6 +15,7 @@ var quizRouter = require('./Back/routes/quiz');
 var questionRouter = require('./Back/routes/questions');
 var audioRouter = require('./Back/routes/audio');
 var logoutRouter = require('./Back/routes/logout')
+var homeRouter = require('./Back/routes/home.js')
 
 var app = express();
 
@@ -43,6 +44,7 @@ app.use('/questions', questionRouter);
 app.use('/audio', audioRouter);
 app.use('/test', require('./Back/routes/test'));
 app.use('/logout', logoutRouter)
+app.use('/home', homeRouter)
 
 
 // catch 404 and forward to error handler
