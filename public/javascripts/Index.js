@@ -1,8 +1,3 @@
-//import { response } from "express";
-
-
-
-
 // fetch lesson 
 async function fetchLessonDetails(lessonId) {
     let data = {
@@ -56,10 +51,36 @@ async function fetchQuizDetails(quizId) {
 
 // create and show lesson modal
 async function createAndShowLessonModal(lessonId, lessonDetails, data) {
+
+    document.querySelectorAll('#modal-' + lessonDetails.lesson.lessonId + ' .nav-link').forEach(tab => {
+        tab.addEventListener('click', function(event) {
+
+            event.preventDefault();
+    
+            document.querySelectorAll('#modal-' + lessonDetails.lesson.lessonId + ' .nav-link').forEach(t => {
+                t.classList.remove('show active');
+            });
+    
+            this.classList.add('show active');
+    
+            document.querySelectorAll('#modal-' + lessonDetails.lesson.lessonId + ' .tab-pane').forEach(pane => {
+                pane.classList.remove('show');
+                pane.classList.remove('active');
+            });
+    
+            const targetId = this.getAttribute('aria-controls');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+                targetContent.classList.add('show');
+                targetContent.classList.add('active');
+            }
+        });
+    });
+
     const modal = document.createElement('div');
     modal.className = 'modal lesson-quiz-modal fade show';
     modal.id = `modal-${lessonDetails.lesson.lessonId}`;
-    modal.setAttribute('tabindex', '-1');
+     //modal.setAttribute('tabindex'/*, '-1'*/);
     modal.setAttribute('aria-labelledby', `${lessonDetails.lesson.lessonId}Label`);
     modal.setAttribute('aria-hidden', 'true');
     modal.innerHTML = `
@@ -115,6 +136,49 @@ async function createAndShowLessonModal(lessonId, lessonDetails, data) {
     modal.addEventListener('hidden.bs.modal', function () {
         modal.remove();
     });
+
+    // let checkExist = setInterval(function() {
+    //     const easyTab = document.getElementById('tabeasyQuestions');
+    //     const simpleTab = document.getElementById('tabsimpleQuestions');
+    //     const mediumTab = document.getElementById('tabmediumQuestions');
+    //     const hardTab = document.getElementById('tabeasyQuestions');
+    //     const extremeTab = document.getElementById('tabextremeQuestions');
+    //     if (easyTab || simpleTab || mediumTab || hardTab || extremeTab) {
+    //        console.log("Element exists!");
+    //        clearInterval(checkExist);
+    //        easyTab.addEventListener('click', function(event) {
+    //         console.log("Clicked");
+
+    //         modal.remove();
+    //     });
+    //     mediumTab.addEventListener('click', function(event) {
+    //         console.log("Clicked");
+
+    //         modal.remove();
+    //     });
+    //     hardTab.addEventListener('click', function(event) {
+    //         console.log("Clicked");
+
+    //         modal.remove();
+    //     });
+    //     simpleTab.addEventListener('click', function(event) {
+    //         console.log("Clicked");
+
+    //         modal.remove();
+    //     });
+    //     extremeTab.addEventListener('click', function(event) {
+    //         console.log("Clicked");
+
+    //         modal.remove();
+    //     });
+    //         }
+    //  }, 1)
+
+    
+
+    //delete modal and load new one
+    //modal.remove();
+
 }
 
 function createListElement(difficultyLevel) {
@@ -131,7 +195,7 @@ function createListElement(difficultyLevel) {
     button.setAttribute('aria-controls', `tab${difficultyLevel}`);
     button.ariaSelected = 'true';
     button.innerText = `Difficulty: ${difficultyLevel}`;
-    button.id = `tab${difficultyLevel}`;
+    button.id = `tab${difficultyLevel}`; 
 
     if (difficultyLevel === "simpleQuestions") {
         button.className += ' active';
@@ -327,31 +391,6 @@ document.querySelectorAll('.card-item').forEach(card => {
         const quizId = this.getAttribute('data-quiz-id');//null
 
         let data = {
-            lessonSimple1: {},
-            lessonSimple2: {},
-            lessonSimple3: {},
-            lessonSimple4: {},
-            lessonSimple5: {},
-            lessonEasy1: {},
-            lessonEasy2: {},
-            lessonEasy3: {},
-            lessonEasy4: {},
-            lessonEasy5: {},
-            lessonMedium1: {},
-            lessonMedium2: {},
-            lessonMedium3: {},
-            lessonMedium4: {},
-            lessonMedium5: {},
-            lessonHard1: {},
-            lessonHard2: {},
-            lessonHard3: {},
-            lessonHard4: {},
-            lessonHard5: {},
-            lessonExtreme1: {},
-            lessonExtreme2: {},
-            lessonExtreme3: {},
-            lessonExtreme4: {},
-            lessonExtreme5: {},
         }
 
         let datwo ={
@@ -378,59 +417,25 @@ document.querySelectorAll('.card-item').forEach(card => {
             const hardLessonIds = lessonDetails.lesson.hardQuestions;//array of hard question ids (5 questions)
             const extremeLessonIds = lessonDetails.lesson.extremeQuestions;//array of extreme question ids (5 questions)
 
-            for (const id of simpleLessonIds) {
-                let question = await getQuestion(id);
-                //console.log(question); 
-        
-                for (let i = 1; i <= 5; i++) {
-                    let propNumber = "lessonSimple" + i.toString();
-                    data[propNumber] = question;
+            let objArry = ["lessonSimple", "lessonEasy", "lessonMedium", "lessonHard", "lessonExtreme"]
 
-            }
-        }
 
-            for (const id of easyLessonIds) {
-                let question = await getQuestion(id);
-                //console.log(question); 
-        
-                for (let i = 1; i <= 5; i++) {
-                    let propNumber = "lessonEasy" + i.toString();
-                    data[propNumber] = question;
-                    
-            }
-        }
-         for (const id of mediumLessonIds) {
-                let question = await getQuestion(id);
-                //console.log(question); 
-        
-                for (let i = 1; i <= 5; i++) {
-                    let propNumber = "lessonMedium" + i.toString();
-                    data[propNumber] = question;
-                    
-            }
-        }
-            for (const id of hardLessonIds) {
-                let question = await getQuestion(id);
-                //console.log(question); 
-        
-                for (let i = 1; i <= 5; i++) {
-                    let propNumber = "lessonHard" + i.toString();
-                    data[propNumber] = question;
-                    
-            }
-        }
-            for (const id of extremeLessonIds) {
-                let question = await getQuestion(id);
-                //console.log(question); 
-        
-                for (let i = 1; i <= 5; i++) {
-                    let propNumber = "lessonExtreme" + i.toString();
-                    data[propNumber] = question;
-                    
-            }
-        }
+        for(const id of simpleLessonIds){
+            let question = await getQuestion(id);
 
-        
+            let i = 0;
+            i++;
+
+            for(let j = 0; j <=5; j++){
+
+
+                let propNumber = objArry[i] + j.toString();
+                data[propNumber] = question;
+            }
+       }
+
+       console.log("data" + data);
+
             if (lessonDetails) {
                 createAndShowLessonModal(lessonId, lessonDetails, data);//lesson1, jsonData, true
             }
@@ -481,3 +486,4 @@ async function getQuestion(questionId){
         throw error; // Rethrow to handle in the calling context
     }
 }
+
