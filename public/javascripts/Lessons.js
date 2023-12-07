@@ -34,7 +34,6 @@ document.getElementById('# pass in one of 5 modal button id to submit lesson').a
     //check EXTREME lesson answers
     checkExtremeAnswers("extremeAnimalLesson", "spanish")//set to be the lesson progress identitfier for updating(IE: Animals : false languageCompletion : spanishLanguageCompletion)
 })
-
 */
 
 function getUser(userEmail) {
@@ -93,11 +92,11 @@ function checkSimpleAnswers(lessonToCheck, langauage){//
     //get all elemnet values from the modal
     var score = 0;
 
-    var question1Checked = document.getElementById('').checked//passin the whatevers radio buttons
-    var question2Checked = document.getElementById('').checked
-    var question3Checked = document.getElementById('').checked
-    var question4Checked = document.getElementById('').checked
-    var question5Checked = document.getElementById('').checked
+    var question1Checked = document.getElementById('answer-true-1').checked//passin the whatevers radio buttons
+    var question2Checked = document.getElementById('answer-true-2').checked
+    var question3Checked = document.getElementById('answer-true-3').checked
+    var question4Checked = document.getElementById('answer-true-4').checked
+    var question5Checked = document.getElementById('answer-true-5').checked
     if(question1Checked){
         score ++;
     }
