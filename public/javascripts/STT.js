@@ -53,9 +53,9 @@ async function saveRecordingToServer(audioBlob) {
         })
         .then(response => {
     if (response.ok) {
-        console.log('Success:', response.statusText);
+        console.log('Success:', response);
     } else {
-        console.error('Error:', response.statusText);
+        console.error('Error:', response);
     }
 })
 .catch((error) => {

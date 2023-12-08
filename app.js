@@ -35,7 +35,7 @@ app.use(session({
   saveUninitialized: true,
 }))
 
-app.use('/', indexRouter);
+app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/lesson', lessonRouter);
@@ -44,7 +44,7 @@ app.use('/questions', questionRouter);
 app.use('/audio', audioRouter);
 app.use('/test', require('./Back/routes/test'));
 app.use('/logout', logoutRouter)
-app.use('/home', homeRouter)
+app.use('/', homeRouter)
 
 
 // catch 404 and forward to error handler

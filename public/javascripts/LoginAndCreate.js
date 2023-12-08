@@ -87,7 +87,7 @@ function loginUser(){
         }).then((res) => {
             if (res.status == 200) {
                 console.log("here")
-                window.location.href = '/'
+                window.location.href = '/index'
             }else{
                 console.log("something wrong with the User login Fetch")
             }
