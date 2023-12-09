@@ -9,7 +9,7 @@
 }
 /* Pre css */
 .flex {
-  display: 15px;
+  display: flex;
   align-items: center;
 }
 .nav_image {

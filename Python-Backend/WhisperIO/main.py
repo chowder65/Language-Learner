@@ -24,6 +24,7 @@ async def root(fileId: str):
     print("fileId: ", fileId)
     speechTotext = await convertToMp3(fileId)
     print(speechTotext)
+
     return {
         "speechTotext": speechTotext
     }
@@ -52,8 +53,9 @@ async def convertToMp3(fileId):
         translation = translator.translate(loadFile(output_file))
         print(translation)
 
+        collection.delete_one({"id": fileId})
+
         return translation
     except Exception as e:
         print(e)
         return "Error"
-    

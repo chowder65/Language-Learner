@@ -33,7 +33,7 @@
             <!-- CHANGE USERNAME MODAL -->
             <button type="button" class="link flex btn btn-link" data-bs-toggle="modal" data-bs-target="#userNameModal">
               <i class="bx bx-edit-alt"></i>
-              <span>Change UserName</span>
+              <span>Change Email</span>
             </button>
 
             <!-- Modal -->
@@ -42,17 +42,17 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="changeUserTitle">Change Username</h5>
+                    <h5 class="modal-title" id="changeUserTitle">Change Email</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
                     <form>
                       <div class="mb-3">
-                        <label for="currentUserName" class="col-form-label">Current Username:</label>
+                        <label for="currentUserName" class="col-form-label">Current Email:</label>
                         <input type="text" class="form-control" id="currentUserName" />
                       </div>
                       <div class="mb-3">
-                        <label for="newUserName" class="col-form-label">New Username:</label>
+                        <label for="newUserName" class="col-form-label">New Email:</label>
                         <input type="text" class="form-control" id="newUserName" />
                       </div>
                     </form>
@@ -160,15 +160,15 @@
         <i class="fas fa-arrow-right card-icon"></i>
       </div>
     </a>
-    <a href="#" class="card-item" data-lesson-id="lesson2">
+    <a href="#" class="card-item" data-lesson-id="lesson2" id="lessonCardTwo">
       <img src="../images/greetingPic.jpg" alt="Card Image">
       <span class="designer">Greetings</span>
       <h3>Learn common phrases on how to greet someone</h3>
       <div class="arrow">
         <i class="fas fa-arrow-right card-icon"></i>
       </div>
-    </a>
-    <a href="#" class="card-item" data-lesson-id="lesson3">
+    </a> 
+    <a href="#" class="card-item" data-lesson-id="lesson3" id="lessonCardThree">
       <img src="../images/countriesPic.jpg" alt="Card Image">
       <span class="editor">Countries</span>
       <h3>Learn how to say different countries in Spanish</h3>
@@ -201,16 +201,15 @@
 
   <h1>Quizes</h1>
   <div class="card-list">
-
-    <a href="#" class="card-item" data-quiz-id="quiz1" id="quizCardOne">
+    <a href="#" class="quiz-card-item" data-quiz-id="quiz1" id="quizCardOne">
       <img src="../images/animalsPicTwo.png" alt="Card Image">
       <span class="developer">Animals Quiz</span>
-      <h3>Test your knowledge on animals in spanish</h3>
+      <h3>Test your knowledge on animals in Spanish</h3>
       <div class="arrow">
         <i class="fas fa-arrow-right card-icon"></i>
       </div>
     </a>
-    <a href="#" class="card-item" data-quiz-id="quiz2">
+    <a href="#" class="quiz-card-item" data-quiz-id="quiz2">
       <img src="../images/greetingPicTwo.jpg" alt="Card Image">
       <span class="designer">Greetings Quiz</span>
       <h3>Do you remember how to greet someone?</h3>
@@ -218,7 +217,7 @@
         <i class="fas fa-arrow-right card-icon"></i>
       </div>
     </a>
-    <a href="#" class="card-item" data-quiz-id="quiz3">
+    <a href="#" class="quiz-card-item" data-quiz-id="quiz3">
       <img src="../images/countriesPicTwo.png" alt="Card Image">
       <span class="editor">Countries Quiz</span>
       <h3>Ready to remember Countries?</h3>
@@ -226,24 +225,21 @@
         <i class="fas fa-arrow-right card-icon"></i>
       </div>
     </a>
+  </div>
 
-    <div class="skill-bars">
-      <div class="bar">
-        <div class="progress-line html">
-        </div>
-      </div>
+  <div class="skill-bars">
+    <div class="bar">
+      <div class="progress-line html"></div>
     </div>
-    <div class="skill-bars">
-      <div class="bar">
-        <div class="progress-line html">
-        </div>
-      </div>
+  </div>
+  <div class="skill-bars">
+    <div class="bar">
+      <div class="progress-line html"></div>
     </div>
-    <div class="skill-bars">
-      <div class="bar">
-        <div class="progress-line html">
-        </div>
-      </div>
+  </div>
+  <div class="skill-bars">
+    <div class="bar">
+      <div class="progress-line html"></div>
     </div>
   </div>
   <script src ="../javascripts/Quizzes.js" ></script>
