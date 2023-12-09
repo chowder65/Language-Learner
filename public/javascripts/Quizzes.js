@@ -1,25 +1,16 @@
 
+
+let quizbtn = setInterval(function() {
+     document.getElementById('submitBtnQuiz').addEventListener('click', checkAnswers("Animals", "spansih"));
+     //{
+    //     event.preventDefault()
+    //     console.log("submit btn clicked")
+    //     checkAnswers("Animals", "spansih")
+    // })
+    return null;
+}, (1000))
+
 //modal
-const quizCardOne = document.getElementById('quizCardOne');
-if (quizCardOne) {
-    quizCardOne.addEventListener('click', function(event) {
-        const submitBtnQuiz = document.getElementById('submitBtnQuiz');
-        if (submitBtnQuiz) {
-            submitBtnQuiz.addEventListener('click', function(event) {
-                event.preventDefault();
-                console.log("Into submit quiz btn");
-                // Check the quiz answers
-                checkAnswers("Animals", "spanish");
-            });
-        } else {
-            console.error("submitBtnQuiz element not found");
-        }
-    });
-} else {
-    console.error("lessonCardOne element not found");
-}
-
-
 
 function getSession(){
 
@@ -71,48 +62,43 @@ function checkAnswers(quizToCheck, langauage){
 
     var score = 0;
 
-    var question1Checked = document.getElementById('answer-true1').checked
-    var question2Checked = document.getElementById('answer-true2').checked
-    var question3Checked = document.getElementById('answer-true3').checked
-    var question4Checked = document.getElementById('answer-true4').checked
-    var question5Checked = document.getElementById('answer-true5').checked
-    var question6Checked = document.getElementById('answer-true6').checked
-    var question7Checked = document.getElementById('answer-true7').checked
-    var question8Checked = document.getElementById('answer-true8').checked
-    var question9Checked = document.getElementById('answer-true9').checked
-    var question10Checked = document.getElementById('answer-true10').checked
+    var question1Checked = document.querySelectorAll('#answer-true')
+
+    for(checked in question1Checked){
+        score ++;
+    }
 
    
-    if(question1Checked){
-        score ++;
-    }
-    if(question2Checked){
-        score ++;
-    }
-    if(question3Checked){
-        score ++;
-    }
-    if(question4Checked){
-        score ++;
-    }
-    if(question5Checked){
-        score ++;
-    }
-    if(question6Checked){
-        score ++;
-    }
-    if(question7Checked){
-        score ++;
-    }
-    if(question8Checked){
-        score ++;
-    }
-    if(question9Checked){
-        score ++;
-    }
-    if(question10Checked){
-        score ++;
-    }
+    // if(question1Checked){
+    //     score ++;
+    // }
+    // if(question2Checked){
+    //     score ++;
+    // }
+    // if(question3Checked){
+    //     score ++;
+    // }
+    // if(question4Checked){
+    //     score ++;
+    // }
+    // if(question5Checked){
+    //     score ++;
+    // }
+    // if(question6Checked){
+    //     score ++;
+    // }
+    // if(question7Checked){
+    //     score ++;
+    // }
+    // if(question8Checked){
+    //     score ++;
+    // }
+    // if(question9Checked){
+    //     score ++;
+    // }
+    // if(question10Checked){
+    //     score ++;
+    // }
 
     //check if score is higher the 70%
 
