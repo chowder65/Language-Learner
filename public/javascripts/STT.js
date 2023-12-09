@@ -78,6 +78,8 @@ async function saveRecordingToServer(audioBlob) {
     ).catch((error) => {
         console.error('Error:', error);
     });
+
+    mediaRecorder.clear();
 }
 
 

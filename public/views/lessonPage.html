@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson Page</title>
+    <link rel="stylesheet" href="../css/lessonandquiz.css">
+</head>
+<body>
+    <h1>Lesson Questions</h1>
+    
+    <form id="lessonForm">
+        <fieldset id="questionSet1">
+            <legend id="q1Label">Question 1:</legend>
+            <div>
+                <input type="radio" name="q1" value="Option 1" id="q1Option1">
+                <label for="q1Option1">Option 1</label>
+            </div>
+            <div>
+                <input type="radio" name="q1" value="Option 2" id="q1Option2">
+                <label for="q1Option2">Option 2</label>
+            </div>
+            <div>
+                <input type="radio" name="q1" value="Option 3" id="q1Option3">
+                <label for="q1Option3">Option 3</label>
+            </div>
+            <div>
+                <input type="radio" name="q1" value="Option 4" id="q1Option4">
+                <label for="q1Option4">Option 4</label>
+            </div>
+        </fieldset>
+
+        <fieldset id="questionSet2">
+            <legend id="q2Label">Question 2:</legend>
+            <div>
+                <input type="radio" name="q2" value="Option 1" id="q2Option1">
+                <label for="q2Option1">Option 1</label>
+            </div>
+            <div>
+                <input type="radio" name="q2" value="Option 2" id="q2Option2">
+                <label for="q2Option2">Option 2</label>
+            </div>
+            <div>
+                <input type="radio" name="q2" value="Option 3" id="q2Option3">
+                <label for="q2Option3">Option 3</label>
+            </div>
+            <div>
+                <input type="radio" name="q2" value="Option 4" id="q2Option4">
+                <label for="q2Option4">Option 4</label>
+            </div>
+        </fieldset>
+        
+        <fieldset id="questionSet3">
+            <legend id="q3Label">Question 3:</legend>
+            <div>
+                <input type="radio" name="q3" value="Option 1" id="q3Option1">
+                <label for="q3Option1">Option 1</label>
+            </div>
+            <div>
+                <input type="radio" name="q3" value="Option 2" id="q3Option2">
+                <label for="q3Option2">Option 2</label>
+            </div>
+            <div>
+                <input type="radio" name="q3" value="Option 3" id="q3Option3">
+                <label for="q3Option3">Option 3</label>
+            </div>
+            <div>
+                <input type="radio" name="q3" value="Option 4" id="q3Option4">
+                <label for="q3Option4">Option 4</label>
+            </div>
+        </fieldset>
+
+        <fieldset id="questionSet4">
+            <legend id="q4Label">Question 4:</legend>
+            <div>
+                <input type="radio" name="q4" value="Option 1" id="q4Option1">
+                <label for="q4Option1">Option 1</label>
+            </div>
+            <div>
+                <input type="radio" name="q4" value="Option 2" id="q4Option2">
+                <label for="q4Option2">Option 2</label>
+            </div>
+            <div>
+                <input type="radio" name="q4" value="Option 3" id="q4Option3">
+                <label for="q4Option3">Option 3</label>
+            </div>
+            <div>
+                <input type="radio" name="q4" value="Option 4" id="q4Option4">
+                <label for="q4Option4">Option 4</label>
+            </div>
+        </fieldset>
+
+        <fieldset id="questionSet5">
+            <legend id="q5Label">Question 5:</legend>
+            <div>
+                <input type="radio" name="q5" value="Option 1" id="q5Option1">
+                <label for="q5Option1">Option 1</label>
+            </div>
+            <div>
+                <input type="radio" name="q5" value="Option 2" id="q5Option2">
+                <label for="q5Option2">Option 2</label>
+            </div>
+            <div>
+                <input type="radio" name="q5" value="Option 3" id="q5Option3">
+                <label for="q5Option3">Option 3</label>
+            </div>
+            <div>
+                <input type="radio" name="q5" value="Option 4" id="q5Option4">
+                <label for="q5Option4">Option 4</label>
+            </div>
+        </fieldset>
+
+        <button type="button" onclick="submitLesson()">Submit</button>
+        <h1 id="score" style="display: none;"></h1>
+    </form>
+
+    <div id="lessonResults"></div>
+
+    <script src="../javascripts/lessonPage.js"></script>
+</body>
+</html>

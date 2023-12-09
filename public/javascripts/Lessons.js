@@ -211,7 +211,7 @@ function checkMediumAnswers(lessonToCheck, langauage){//
     //get all elemnet values from the modal
     var score = 0;
 
-    var question1Checked = document.getElementById('').checked//passin the whatevers radio buttons
+    var question1Checked = document.getElementById('').checked
     var question2Checked = document.getElementById('').checked
     var question3Checked = document.getElementById('').checked
     var question4Checked = document.getElementById('').checked

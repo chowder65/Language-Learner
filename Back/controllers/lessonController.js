@@ -20,7 +20,6 @@ let lessonController = {
         const query = req.body.lessonId;
         const lesson = await collection.findOne({ lessonId: query });
         if(lesson){
-            console.log(lesson);
             return res.status(200).json({lesson: lesson});
         }else{
             return res.status(404).json({message: "Lesson not found"});
